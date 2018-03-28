@@ -44,22 +44,55 @@ public class Administrador
 	}
 	
 	//Fazer alterações no preço dos albuns (com histórico)
-	public void updateAlbumPrice(Album lista_albuns, String nome,String grupo, String[] musicas, int price, int unidades)
+	public void updateAlbumPrice(Album album, int price)
 	{
-		Album.setPrice(price);
+		album.setPrice(price);
 	}
 	//Remover um album (se ainda não vendido)
-	public void removeAlbum(Album lista_albuns, String nome,String grupo, String[] musicas, int price, int unidades)
+	public void removeAlbum(ArrayList<Album> lista_albuns, Album album)
 	{
-		if ()
+		if (album.getUnidades() > 0)
 		{
-			lista_albuns.remove(Album);			
+			lista_albuns.remove(album);			
 		}
 		else
 		{
-			System.out.println("Não é possível remover o album porque já foi vendido.")
+			System.out.println("Não é possível remover o album porque já foi vendido.");
 		}
 	}
 	
+	public Album visualizarAlbumNome (ArrayList<Album> lista_albuns, Album album, String nome)
+	{
+		for (int i = 0; i<lista_albuns.size(); i++)
+		{
+			if(lista_albuns.get(i).getNome() == nome) 
+			{
+				return lista_albuns.get(i);
+			}
+		}
+		return null;
+	}
+	public Album visualizarAlbumGrupo (ArrayList<Album> lista_albuns, Album album, String grupo)
+	{
+		for (int i = 0; i<lista_albuns.size(); i++)
+		{
+			if(lista_albuns.get(i).getGrupo() == grupo) 
+			{
+				return lista_albuns.get(i);
+			}
+		}
+		return null;
+	}
+	public Album visualizarAlbumMusicas (ArrayList<Album> lista_albuns, Album album, String[] musicas)
+	{
+		for (int i = 0; i<lista_albuns.size(); i++)
+		{
+			if(lista_albuns.get(i).getMusicas() == musicas) 
+			{
+				return lista_albuns.get(i);
+			}
+		}
+		return null;
+	}
 
 }
