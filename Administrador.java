@@ -94,5 +94,15 @@ public class Administrador
 		}
 		return null;
 	}
+	
+	//Ver todos os albuns
+	public void listaAlbuns(ArrayList<Album> lista_albuns)
+	{
+        System.out.printf("Lista dos albuns:");
+        for (int i =0; i< lista_albuns.size(); i++)
+        {
+        	System.out.printf("Album: %s Grupo: %s Musicas: %s Preço: %i  Unidades em stock: %i \n", lista_albuns.get(i).getNome(),lista_albuns.get(i).getGrupo(),lista_albuns.get(i).getMusicas(),lista_albuns.get(i).getPrice(),lista_albuns.get(i).getUnidades());
+        }
+	}
 
 }
