@@ -35,29 +35,29 @@ public class Administrador
 	
 	
 	//Adicionar albuns
-	public void addNewAlbum (ArrayList<Albuns> lista_albuns,String nome, String grupo, String[] musicas, int price)
+	public void addNewAlbum (ArrayList<Album> lista_albuns,String nome, String grupo, String[] musicas, int price, int unidades)
 	{
 		//criar um album
-		Albuns album = new Albuns(nome, grupo, musicas, price);
-		//Adicionar album ‡ lista
+		Album album = new Album(nome, grupo, musicas, price, unidades);
+		//Adicionar album √† lista
 		lista_albuns.add(album);
 	}
 	
-	//Fazer alteraÁıes no preÁo dos albuns (com histÛrico)
-	public void updateAlbumPrice(Albuns lista_albuns, String nome,String grupo, String[] musicas, int price)
+	//Fazer altera√ß√µes no pre√ßo dos albuns (com hist√≥rico)
+	public void updateAlbumPrice(Album lista_albuns, String nome,String grupo, String[] musicas, int price, int unidades)
 	{
-		Albuns.setPrice(price);
+		Album.setPrice(price);
 	}
-	//Remover um album (se ainda n„o vendido)
-	public void removeAlbum(Albuns lista_albuns, String nome,String grupo, String[] musicas, int price)
+	//Remover um album (se ainda n√£o vendido)
+	public void removeAlbum(Album lista_albuns, String nome,String grupo, String[] musicas, int price, int unidades)
 	{
 		if ()
 		{
-			lista_albuns.remove(album);			
+			lista_albuns.remove(Album);			
 		}
 		else
 		{
-			System.out.println("N„o È possÌvel remover o album porque j· foi vendido.")
+			System.out.println("N√£o √© poss√≠vel remover o album porque j√° foi vendido.")
 		}
 	}
 	
