@@ -7,7 +7,7 @@ public class Cliente
 	private String username;
 	private String password;
 	private int saldo;
-	//albuns j· comprados pelo cliente
+	//albuns j√° comprados pelo cliente
     private ArrayList<Album> lista_albuns_cliente = new ArrayList<Album>();
     //Todos os albuns
     private ArrayList<Album> lista_albuns = new ArrayList<Album>();
@@ -85,6 +85,18 @@ public class Cliente
 		for (int i = 0; i<lista_albuns.size(); i++)
 		{
 			if (lista_albuns.get(i).getMusicas() == musicas)
+			{
+				return lista_albuns.get(i);
+			}
+		}
+		return null;
+	}
+	//Pesquisar albuns por genero
+	public Album visualizarAlbumGenero (ArrayList<Album> lista_albuns, Album album, String genero)
+	{
+		for (int i = 0; i<lista_albuns.size(); i++)
+		{
+			if(lista_albuns.get(i).getGenero() == genero) 
 			{
 				return lista_albuns.get(i);
 			}
