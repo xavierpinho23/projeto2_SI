@@ -114,7 +114,7 @@ public class Administrador
         System.out.printf("Lista dos albuns:");
         for (int i =0; i< lista_albuns.size(); i++)
         {
-        	System.out.printf("Album: %s Grupo: %s Musicas: %s Preço: %i  Unidades em stock: %i \n", lista_albuns.get(i).getNome(),lista_albuns.get(i).getGrupo(),lista_albuns.get(i).getMusicas(),lista_albuns.get(i).getPrice(),lista_albuns.get(i).getUnidades());
+        	System.out.printf("Album: %s Grupo: %s Musicas: %s Preço: %s  Unidades em stock: %s \n", lista_albuns.get(i).getNome(),lista_albuns.get(i).getGrupo(),lista_albuns.get(i).getMusicas(),lista_albuns.get(i).getPrice(),lista_albuns.get(i).getUnidades());
         }
 	}
 

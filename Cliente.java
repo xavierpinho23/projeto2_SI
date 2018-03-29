@@ -7,7 +7,7 @@ public class Cliente
 	private String username;
 	private String password;
 	private int saldo;
-	//albuns jÃ¡ comprados pelo cliente
+	//albuns já comprados pelo cliente
     private ArrayList<Album> lista_albuns_cliente = new ArrayList<Album>();
     //Todos os albuns
     private ArrayList<Album> lista_albuns = new ArrayList<Album>();
@@ -92,7 +92,7 @@ public class Cliente
 		return null;
 	}
 	//Pesquisar albuns por genero
-	public Album visualizarAlbumGenero (ArrayList<Album> lista_albuns, Album album, String genero)
+	public Album findAlbunsGenero (String genero)
 	{
 		for (int i = 0; i<lista_albuns.size(); i++)
 		{
@@ -104,5 +104,18 @@ public class Cliente
 		return null;
 	}
 	
+	//Comprar albuns
+	public void compraAlbumPorNome(ArrayList<Album> lista_albuns, Album album) 
+	{
+		if (album.getUnidades() > 0)
+		{
+			lista_albuns.remove(album);
+			lista_albuns_cliente.add(album);
+		}
+		else
+		{
+			System.out.println("Não é possível remover o album porque já não existe.");
+		}
+	}
 
 }
