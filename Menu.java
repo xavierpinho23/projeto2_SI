@@ -9,7 +9,7 @@ public class Menu
 	{
 		int opcao = 0;
 		Administrador admin = new Administrador("Xavier", "23"); 
-		ArrayList<Albuns> lista_albuns = new ArrayList<Albuns>();
+		ArrayList<Album> lista_albuns = new ArrayList<Album>();
         Menu menu = new Menu();
 	}
 

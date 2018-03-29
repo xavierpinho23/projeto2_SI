@@ -5,18 +5,28 @@ public class Album
 	private String nome;
 	private String grupo;
 	private String [] musicas;
+	private String genero;
 	private int price;
 	private int unidades;
 	
-	public Album(String nome, String grupo, String[] musicas, int price, int unidades)
+	public Album(String nome, String grupo, String[] musicas, String genero,int price, int unidades)
 	{
 		this.nome = nome;
 		this.grupo = grupo;
 		this.musicas = musicas;
 		this.price = price;
 		this.unidades = unidades;
+		this.genero = genero;
 	}
-	
+	public String getGenero()
+	{
+		return genero;
+	}
+
+	public void setGenero(String genero)
+	{
+		this.genero = genero;
+	}
 	public int getUnidades()
 	{
 		return unidades;
@@ -56,5 +66,15 @@ public class Album
 	public void setMusicas(String[] musicas)
 	{
 		this.musicas = musicas;
+	}
+	
+	public String toString()
+	{
+		return "Album: " + 
+				"Grupo: " + grupo + 
+				"Musicas: " +  musicas +
+				"Genero: " + genero +
+				"Preço: " + price +
+				"Quantidade: " + unidades;
 	}
 }

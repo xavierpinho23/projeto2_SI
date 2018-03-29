@@ -35,20 +35,20 @@ public class Administrador
 	
 	
 	//Adicionar albuns
-	public void addNewAlbum (ArrayList<Album> lista_albuns,String nome, String grupo, String[] musicas, int price, int unidades)
+	public void addNewAlbum (ArrayList<Album> lista_albuns,String nome,String grupo, String[] musicas, String genero,int price, int unidades)
 	{
 		//criar um album
-		Album album = new Album(nome, grupo, musicas, price, unidades);
-		//Adicionar album √† lista
+		Album album = new Album(nome, grupo, musicas, genero, price, unidades);
+		//Adicionar album ‡ lista
 		lista_albuns.add(album);
 	}
 	
-	//Fazer altera√ß√µes no pre√ßo dos albuns (com hist√≥rico)
+	//Fazer alteraÁıes no preÁo dos albuns (com histÛrico)
 	public void updateAlbumPrice(Album album, int price)
 	{
 		album.setPrice(price);
 	}
-	//Remover um album (se ainda n√£o vendido)
+	//Remover um album (se ainda n„o vendido)
 	public void removeAlbum(ArrayList<Album> lista_albuns, Album album)
 	{
 		if (album.getUnidades() > 0)
@@ -57,10 +57,10 @@ public class Administrador
 		}
 		else
 		{
-			System.out.println("N√£o √© poss√≠vel remover o album porque j√° foi vendido.");
+			System.out.println("N„o È possÌvel remover o album porque j· foi vendido.");
 		}
 	}
-	
+	//Pesquisar albuns por nome
 	public Album visualizarAlbumNome (ArrayList<Album> lista_albuns, Album album, String nome)
 	{
 		for (int i = 0; i<lista_albuns.size(); i++)
@@ -72,6 +72,7 @@ public class Administrador
 		}
 		return null;
 	}
+	//Pesquisar albuns por grupo
 	public Album visualizarAlbumGrupo (ArrayList<Album> lista_albuns, Album album, String grupo)
 	{
 		for (int i = 0; i<lista_albuns.size(); i++)
@@ -83,6 +84,7 @@ public class Administrador
 		}
 		return null;
 	}
+	//Pesquisar albuns por Musicas
 	public Album visualizarAlbumMusicas (ArrayList<Album> lista_albuns, Album album, String[] musicas)
 	{
 		for (int i = 0; i<lista_albuns.size(); i++)
@@ -94,14 +96,25 @@ public class Administrador
 		}
 		return null;
 	}
-	
+	//Pesquisar albuns por genero
+	public Album visualizarAlbumGenero (ArrayList<Album> lista_albuns, Album album, String genero)
+	{
+		for (int i = 0; i<lista_albuns.size(); i++)
+		{
+			if(lista_albuns.get(i).getGenero() == genero) 
+			{
+				return lista_albuns.get(i);
+			}
+		}
+		return null;
+	}
 	//Ver todos os albuns
 	public void listaAlbuns(ArrayList<Album> lista_albuns)
 	{
         System.out.printf("Lista dos albuns:");
         for (int i =0; i< lista_albuns.size(); i++)
         {
-        	System.out.printf("Album: %s Grupo: %s Musicas: %s Pre√ßo: %i  Unidades em stock: %i \n", lista_albuns.get(i).getNome(),lista_albuns.get(i).getGrupo(),lista_albuns.get(i).getMusicas(),lista_albuns.get(i).getPrice(),lista_albuns.get(i).getUnidades());
+        	System.out.printf("Album: %s Grupo: %s Musicas: %s PreÁo: %i  Unidades em stock: %i \n", lista_albuns.get(i).getNome(),lista_albuns.get(i).getGrupo(),lista_albuns.get(i).getMusicas(),lista_albuns.get(i).getPrice(),lista_albuns.get(i).getUnidades());
         }
 	}
 
