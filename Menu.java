@@ -8,19 +8,21 @@ public class Menu
 	
 	public void LogInAdministrador(Administrador admin,ArrayList<Administrador> administradores, ArrayList<Album> lista_albuns)
 	{
-		//Aqui È onde o ADMIN executa as suas aÁıes! 
+		//Aqui √© onde o ADMIN executa as suas a√ß√µes! 
 		int opcao = 0;
 		Scanner input = new Scanner(System.in);
 		while (opcao!=6)
 		{
-			System.out.printf("Bem Vindo ‡ Vinyl Records Lda. administrador %s ! \n", admin.getUsername());
-			System.out.printf("Escolha uma das seguintes opÁıes: \n");
+			System.out.printf("Bem Vindo √† Vinyl Records Lda. administrador %s ! \n", admin.getUsername());
+			System.out.printf("Escolha uma das seguintes op√ß√µes: \n");
 			System.out.printf("[1] -> Adicionar um Album");
 			System.out.printf("[2] -> Remover um Album");
 			System.out.printf("[3] -> Ver a lista de Albuns");
-			System.out.printf("[4] -> Mudar o preÁo de um Album");
-			System.out.printf("[5] -> Visiualizar estatÌsticas");
-			System.out.printf("[6] -> Terminar sess„o");
+			System.out.printf("[4] -> Mudar o pre√ßo de um Album");
+			System.out.printf("[5] -> Visiualizar estat√≠sticas");
+			System.out.printf("[6] -> Terminar sess√£o");
+			opcao=input.nextInt();
+			input.nextLine();
 			
 			if(opcao == 1)
 			{
@@ -30,7 +32,7 @@ public class Menu
 				String nome = input.nextLine();
 				System.out.printf("Grupo: ");
 				String grupo = input.nextLine();
-				System.out.printf("Quantas m˙sicas tem o album?: ");
+				System.out.printf("Quantas m√∫sicas tem o album?: ");
 				int tamanho = input.nextInt();
 				String[] musicas = new String[tamanho];
 				for (int i = 0; i < musicas.length; i++)
@@ -39,7 +41,7 @@ public class Menu
 				}
 				System.out.printf("Genero: ");
 				String genero = input.nextLine();
-				System.out.printf("PreÁo: ");
+				System.out.printf("Pre√ßo: ");
 				int price = input.nextInt();
 				System.out.printf("Unidades: ");
 				int unidades = input.nextInt();
@@ -47,16 +49,16 @@ public class Menu
 				//Tornar o input num objeto Album
 				Album album = new Album(nome,grupo, musicas, genero,price, unidades, disponivel);
 				
-				//Verificar se o album j· existe
+				//Verificar se o album j√° existe
 				if (admin.visualizarAlbumNome(lista_albuns, nome) != null)
 				{
-					System.out.printf("O album %s j· existe!", nome);
+					System.out.printf("O album %s j√° existe!", nome);
 					continue;
 				}
 				else
 				{
-					//Caso n„o exista, È adicionado ‡ lista de albuns
-					admin.addNewAlbum(lista_albuns, nome, grupo, musicas, genero, price, unidades, disponivel);
+					//Caso n√£o exista, √© adicionado √† lista de albuns
+					admin.addNewAlbum(lista_albuns, album);
 					System.out.println("Album adicionado com sucesso!");
 				}
 				
@@ -64,13 +66,13 @@ public class Menu
 			if(opcao == 2)
 			{
 				//Remover um Album
-				//Apenas È necessario o nome para remover o album (?)
+				//Apenas √© necessario o nome para remover o album (?)
 				System.out.printf("Introduza o Album que quer remover.");
 				System.out.printf("Nome: ");
 				String nome = input.nextLine();
 				/*System.out.printf("Grupo: ");
 				String grupo = input.nextLine();
-				System.out.printf("Quantas m˙sicas tem o album?: ");
+				System.out.printf("Quantas m√∫sicas tem o album?: ");
 				int tamanho = input.nextInt();
 				String[] musicas = new String[tamanho];
 				for (int i = 0; i < musicas.length; i++)
@@ -79,21 +81,22 @@ public class Menu
 				}
 				System.out.printf("Genero: ");
 				String genero = input.nextLine();
-				System.out.printf("PreÁo: ");
+				System.out.printf("Pre√ßo: ");
 				int price = input.nextInt();
 				System.out.printf("Unidades: ");
 				int unidades = input.nextInt();*/
 				
 				//Verificar se o album existe
+				Album album=admin.visualizarAlbumNome(lista_albuns, nome);
 				if (admin.visualizarAlbumNome(lista_albuns, nome) != null)
 				{
 					boolean disponivel = true;
-					//Em vez de null tem de ser album, mas nao est· a dar :/
-					admin.removeAlbum(lista_albuns , null, nome);
+					//Em vez de null tem de ser album, mas nao est√° a dar :/
+					admin.removeAlbum(lista_albuns , album);
 				}
 				else
 				{
-					System.out.printf("O Album %s que pretende remover n„o existe.", nome);
+					System.out.printf("O Album %s que pretende remover n√£o existe.", nome);
 				}
 				
 			}
@@ -105,12 +108,12 @@ public class Menu
 			}
 			if(opcao == 4)
 			{
-				//Mudar o preÁo de um album
-				System.out.printf("Qual o album que pretende alterar o preÁo?");
+				//Mudar o pre√ßo de um album
+				System.out.printf("Qual o album que pretende alterar o pre√ßo?");
 				String nome = input.nextLine();
-				System.out.printf("Que preÁo dever· custar?");
+				System.out.printf("Que pre√ßo dever√° custar?");
 				int price = input.nextInt();
-				//Em vez de null tem de ser album, mas nao est· a dar :/
+				//Em vez de null tem de ser album, mas nao est√° a dar :/
 				admin.updateAlbumPrice(null, nome, price);
 			}
 			if(opcao == 5)
@@ -123,21 +126,21 @@ public class Menu
 	
 	public void LogInCliente(Cliente cliente, ArrayList<Cliente> clientes, ArrayList<Album> lista_albuns)
 	{
-		//Aqui È onde o CLIENTE executa as suas aÁıes!
+		//Aqui √© onde o CLIENTE executa as suas a√ß√µes!
 		int opcao = 0;
 		Scanner input = new Scanner(System.in);
 		while (opcao!=8)
 		{
-			System.out.printf("Bem Vindo ‡ Vinyl Records Lda. cliente %s ! \n", cliente.getUsername());
-			System.out.printf("Escolha uma das seguintes opÁıes: \n");
+			System.out.printf("Bem Vindo √† Vinyl Records Lda. cliente %s ! \n", cliente.getUsername());
+			System.out.printf("Escolha uma das seguintes op√ß√µes: \n");
 			System.out.printf("[1] -> Comprar um Album");
 			System.out.printf("[2] -> Ver saldo");
 			System.out.printf("[3] -> Ver a lista de Albuns");
 			System.out.printf("[4] -> Ver lista de Albuns pessoal");
 			System.out.printf("[5] -> Procurar Album por nome");
-			System.out.printf("[6] -> Procurar Album por gÈnero");
+			System.out.printf("[6] -> Procurar Album por g√©nero");
 			System.out.printf("[7] -> Procurar Album por grupo");
-			System.out.printf("[8] -> Terminar sess„o");
+			System.out.printf("[8] -> Terminar sess√£o");
 
 		}
 		
