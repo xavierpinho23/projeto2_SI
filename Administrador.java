@@ -35,34 +35,33 @@ public class Administrador
 	
 	
 	//Adicionar albuns
-	public void addNewAlbum (ArrayList<Album> lista_albuns, Album album)
+	public void addNewAlbum (ArrayList<Album> lista_albuns,String nome,String grupo, String[] musicas, String genero,int price, int unidades, boolean disponivel)
 	{
-		//Jorge: Corrigi, porque pedias argumentos nome, genero, etc... quando n√£o precisas
-		// porque defines sempre o album antes de o adicionar.
-		//Adicionar album √† lista
+		//criar um album
+		Album album = new Album(nome, grupo, musicas, genero, price, unidades, disponivel);
+		//Adicionar album ‡ lista
 		lista_albuns.add(album);
 	}
 	
-	//Fazer altera√ß√µes no pre√ßo dos albuns (com hist√≥rico)
-	public void updateAlbumPrice(Album album, int price)
+	//Fazer alteraÁıes no preÁo dos albuns (com histÛrico)
+	public void updateAlbumPrice(Album album, String nome, int price)
 	{
 		album.setPrice(price);
 	}
-	//Remover um album (se ainda n√£o vendido)
+	//Remover um album (se ainda n„o vendido)
 	public void removeAlbum(ArrayList<Album> lista_albuns, Album album, String nome)
 	{
-		//Alterei aqui, porque se houver mais que um album, n√£o se retira da lista
-		//Apenas se reduz o n√∫mero em -1.
-		if (album.getUnidades() ==1)
+		if (album.getUnidades() == 1)
 		{
 			lista_albuns.remove(album);			
 		}
-		else if (album.getUnidades()>1) {
-			album.setUnidades(album.getUnidades()-1);
+		else if (album.getUnidades() > 1)
+		{
+			album.setUnidades(album.getUnidades() - 1);
 		}
 		else
 		{
-			System.out.println("N√£o √© poss√≠vel remover o album porque j√° foi vendido.");
+			System.out.println("N„o È possÌvel remover o album porque j· foi vendido.");
 		}
 	}
 	//Pesquisar albuns por nome
@@ -119,7 +118,7 @@ public class Administrador
         System.out.printf("Lista dos albuns:");
         for (int i =0; i< lista_albuns.size(); i++)
         {
-        	System.out.printf("Album: %s Grupo: %s Musicas: %s Pre√ßo: %s  Unidades em stock: %s \n", lista_albuns.get(i).getNome(),lista_albuns.get(i).getGrupo(),lista_albuns.get(i).getMusicas(),lista_albuns.get(i).getPrice(),lista_albuns.get(i).getUnidades());
+        	System.out.printf("Album: %s Grupo: %s Musicas: %s PreÁo: %s  Unidades em stock: %s \n", lista_albuns.get(i).getNome(),lista_albuns.get(i).getGrupo(),lista_albuns.get(i).getMusicas(),lista_albuns.get(i).getPrice(),lista_albuns.get(i).getUnidades());
         }
 	}
 

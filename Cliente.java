@@ -7,13 +7,35 @@ public class Cliente
 	private String username;
 	private String password;
 	private int saldo;
-    private ArrayList<Album> lista_albuns_cliente = new ArrayList<Album>(); //albuns já comprados pelo cliente
+    protected ArrayList<Album> lista_albuns_cliente = new ArrayList<Album>(); //albuns já comprados pelo cliente
     private ArrayList<Album> lista_albuns = new ArrayList<Album>(); //Todos os albuns
 
-	public Cliente(String username, String password, int saldo, String[] lista_albuns)
+	public Cliente(String username, String password, int saldo, ArrayList<Album> lista_albuns_cliente)
 	{
 		this.username = username;
         this.password = password;
+        this.saldo = saldo;
+        this.lista_albuns_cliente = lista_albuns_cliente;
+	}
+
+	public ArrayList<Album> getLista_albuns_cliente()
+	{
+		return lista_albuns_cliente;
+	}
+
+	public void setLista_albuns_cliente(ArrayList<Album> lista_albuns_cliente)
+	{
+		this.lista_albuns_cliente = lista_albuns_cliente;
+	}
+
+	public ArrayList<Album> getLista_albuns()
+	{
+		return lista_albuns;
+	}
+
+	public void setLista_albuns(ArrayList<Album> lista_albuns)
+	{
+		this.lista_albuns = lista_albuns;
 	}
 
 	public String getUsername()
@@ -44,11 +66,6 @@ public class Cliente
 	public void setSaldo(int saldo)
 	{
 		this.saldo = saldo;
-	}
-
-	public ArrayList<Album> getlista_albuns_cliente() 
-	{
-		return lista_albuns_cliente;
 	}
 	
 	//procurar album por nome
@@ -102,12 +119,17 @@ public class Cliente
 		return null;
 	}
 	
-	//Comprar albuns
-	public void compraAlbum(ArrayList<Album> lista_albuns, Album album) 
+	//Comprar albuns (por nome)
+	void compraAlbum(ArrayList<Album> lista_albuns,Album album, String nome) 
 	{
-		if (album.getUnidades() > 0)
+		if (album.getUnidades() == 1)
 		{
 			lista_albuns.remove(album);
+			lista_albuns_cliente.add(album);
+		}
+		else if(album.getUnidades() > 1)
+		{
+			album.setUnidades(album.getUnidades()-1);
 			lista_albuns_cliente.add(album);
 		}
 		else
