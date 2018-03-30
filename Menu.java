@@ -113,8 +113,8 @@ public class Menu
 				String nome = input.nextLine();
 				System.out.printf("Que preço deverá custar?");
 				int price = input.nextInt();
-				//Em vez de null tem de ser album, mas nao está a dar :/
-				admin.updateAlbumPrice(null, nome, price);
+				Album album=admin.visualizarAlbumNome(lista_albuns, nome);
+				admin.updateAlbumPrice(album,price);
 			}
 			if(opcao == 5)
 			{
