@@ -7,10 +7,8 @@ public class Cliente
 	private String username;
 	private String password;
 	private int saldo;
-	//albuns já comprados pelo cliente
-    private ArrayList<Album> lista_albuns_cliente = new ArrayList<Album>();
-    //Todos os albuns
-    private ArrayList<Album> lista_albuns = new ArrayList<Album>();
+    private ArrayList<Album> lista_albuns_cliente = new ArrayList<Album>(); //albuns já comprados pelo cliente
+    private ArrayList<Album> lista_albuns = new ArrayList<Album>(); //Todos os albuns
 
 	public Cliente(String username, String password, int saldo, String[] lista_albuns)
 	{
@@ -105,7 +103,7 @@ public class Cliente
 	}
 	
 	//Comprar albuns
-	public void compraAlbumPorNome(ArrayList<Album> lista_albuns, Album album) 
+	public void compraAlbum(ArrayList<Album> lista_albuns, Album album) 
 	{
 		if (album.getUnidades() > 0)
 		{

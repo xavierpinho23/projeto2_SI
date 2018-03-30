@@ -8,8 +8,9 @@ public class Album
 	private String genero;
 	private int price;
 	private int unidades;
+	private boolean disponivel;
 	
-	public Album(String nome, String grupo, String[] musicas, String genero,int price, int unidades)
+	public Album(String nome, String grupo, String[] musicas, String genero,int price, int unidades, boolean disponivel)
 	{
 		this.nome = nome;
 		this.grupo = grupo;
@@ -17,12 +18,20 @@ public class Album
 		this.price = price;
 		this.unidades = unidades;
 		this.genero = genero;
+		this.disponivel = disponivel;
+	}
+	public boolean isDisponivel()
+	{
+		return disponivel;
+	}
+	public void setDisponivel(boolean disponivel)
+	{
+		this.disponivel = disponivel;
 	}
 	public String getGenero()
 	{
 		return genero;
 	}
-
 	public void setGenero(String genero)
 	{
 		this.genero = genero;
@@ -70,11 +79,21 @@ public class Album
 	
 	public String toString()
 	{
+		//Apresentação do Album
 		return "Album: " + 
 				"Grupo: " + grupo + 
 				"Musicas: " +  musicas +
 				"Genero: " + genero +
 				"Preço: " + price +
-				"Quantidade: " + unidades;
+				"Quantidade: " + unidades +
+				"Disponível: " + disponivel;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

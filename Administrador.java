@@ -35,21 +35,21 @@ public class Administrador
 	
 	
 	//Adicionar albuns
-	public void addNewAlbum (ArrayList<Album> lista_albuns,String nome,String grupo, String[] musicas, String genero,int price, int unidades)
+	public void addNewAlbum (ArrayList<Album> lista_albuns,String nome,String grupo, String[] musicas, String genero,int price, int unidades, boolean disponivel)
 	{
 		//criar um album
-		Album album = new Album(nome, grupo, musicas, genero, price, unidades);
+		Album album = new Album(nome, grupo, musicas, genero, price, unidades, disponivel);
 		//Adicionar album à lista
 		lista_albuns.add(album);
 	}
 	
 	//Fazer alterações no preço dos albuns (com histórico)
-	public void updateAlbumPrice(Album album, int price)
+	public void updateAlbumPrice(Album album, String nome, int price)
 	{
 		album.setPrice(price);
 	}
 	//Remover um album (se ainda não vendido)
-	public void removeAlbum(ArrayList<Album> lista_albuns, Album album)
+	public void removeAlbum(ArrayList<Album> lista_albuns, Album album, String nome)
 	{
 		if (album.getUnidades() > 0)
 		{
@@ -61,7 +61,7 @@ public class Administrador
 		}
 	}
 	//Pesquisar albuns por nome
-	public Album visualizarAlbumNome (ArrayList<Album> lista_albuns, Album album, String nome)
+	public Album visualizarAlbumNome (ArrayList<Album> lista_albuns, String nome)
 	{
 		for (int i = 0; i<lista_albuns.size(); i++)
 		{
@@ -73,7 +73,7 @@ public class Administrador
 		return null;
 	}
 	//Pesquisar albuns por grupo
-	public Album visualizarAlbumGrupo (ArrayList<Album> lista_albuns, Album album, String grupo)
+	public Album visualizarAlbumGrupo (ArrayList<Album> lista_albuns, String grupo)
 	{
 		for (int i = 0; i<lista_albuns.size(); i++)
 		{
@@ -85,7 +85,7 @@ public class Administrador
 		return null;
 	}
 	//Pesquisar albuns por Musicas
-	public Album visualizarAlbumMusicas (ArrayList<Album> lista_albuns, Album album, String[] musicas)
+	public Album visualizarAlbumMusicas (ArrayList<Album> lista_albuns,  String[] musicas)
 	{
 		for (int i = 0; i<lista_albuns.size(); i++)
 		{
@@ -97,7 +97,7 @@ public class Administrador
 		return null;
 	}
 	//Pesquisar albuns por genero
-	public Album visualizarAlbumGenero (ArrayList<Album> lista_albuns, Album album, String genero)
+	public Album visualizarAlbumGenero (ArrayList<Album> lista_albuns,  String genero)
 	{
 		for (int i = 0; i<lista_albuns.size(); i++)
 		{
