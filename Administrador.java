@@ -44,7 +44,7 @@ public class Administrador
 	}
 	
 	//Fazer alterações no preço dos albuns (com histórico)
-	public void updateAlbumPrice(Album album, String nome, int price)
+	public void updateAlbumPrice(Album album, int price)
 	{
 		album.setPrice(price);
 	}
