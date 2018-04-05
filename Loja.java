@@ -31,20 +31,23 @@ public class Loja
          //Adicionar Albuns à loja através do administrador
         admin.addNewAlbum(lista_albuns,"Mesmerize","SOAD",musicas2,"Metal",4,9,true);
         
-        //Colocar o album na lista de albuns
+        //Ver a lista de albuns
         admin.listaAlbuns(lista_albuns);
         
         //Testar setters and getters
         System.out.println("Grupo: " + album1.getGrupo());
         System.out.println("Genero: " + album1.getGenero());
-        System.out.println("Musicas: " + Arrays.deepToString(album1.getMusicas()));
+        //System.out.println("Musicas: " + Arrays.deepToString(album1.getMusicas()));
+        //System.out.println("Musicas: " + album1.getMusica);
+
         System.out.println("Nome: "+ album1.getNome());
         System.out.println("Preço: "+ album1.getPrice());
         System.out.println("Unidades: "+ album1.getUnidades());
 
         //Remover o album da lista de albuns através do admin
         admin.removeAlbum(lista_albuns, album1,"Toxicity");
-	
+        System.out.println("blabla" + lista_albuns);
+
         //Cliente
         System.out.println(cliente.findAlbunsName("Mesmerize"));
         System.out.println(cliente.findAlbunsGroup("SOAD"));
@@ -53,7 +56,6 @@ public class Loja
         System.out.println(cliente.getLista_albuns_cliente());
         System.out.println(cliente.getPassword());
         System.out.println(cliente.getUsername());
-
 	}
 
 }

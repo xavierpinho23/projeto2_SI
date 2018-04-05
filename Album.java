@@ -1,5 +1,7 @@
 package trabalho2_si;
 
+import java.util.Arrays;
+
 public class Album
 {
 	private String nome;
@@ -80,20 +82,13 @@ public class Album
 	public String toString()
 	{
 		//Apresentação do Album
-		return "Album: " + 
+		return "Album: " + nome + 
 				"Grupo: " + grupo + 
-				"Musicas: " +  musicas +
+				"Musicas: " + musicas +
 				"Genero: " + genero +
 				"Preço: " + price +
 				"Quantidade: " + unidades +
 				"Disponível: " + disponivel;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
