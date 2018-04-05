@@ -1,7 +1,5 @@
 package trabalho2_si;
 
-import java.util.Arrays;
-
 public class Album
 {
 	private String nome;
@@ -10,25 +8,15 @@ public class Album
 	private String genero;
 	private int price;
 	private int unidades;
-	private boolean disponivel;
-	
-	public Album(String nome, String grupo, String[] musicas, String genero,int price, int unidades, boolean disponivel)
+
+	public Album(Loja loja,String nome, String grupo, String[] musicas, String genero,int price, int unidades)
 	{
 		this.nome = nome;
 		this.grupo = grupo;
 		this.musicas = musicas;
 		this.price = price;
-		this.unidades = unidades;
 		this.genero = genero;
-		this.disponivel = disponivel;
-	}
-	public boolean isDisponivel()
-	{
-		return disponivel;
-	}
-	public void setDisponivel(boolean disponivel)
-	{
-		this.disponivel = disponivel;
+		this.unidades = unidades;
 	}
 	public String getGenero()
 	{
@@ -82,13 +70,12 @@ public class Album
 	public String toString()
 	{
 		//Apresentação do Album
-		return "Album: " + nome + 
-				"Grupo: " + grupo + 
-				"Musicas: " + musicas +
-				"Genero: " + genero +
-				"Preço: " + price +
-				"Quantidade: " + unidades +
-				"Disponível: " + disponivel;
+		return "Album: " + nome + "\n" + 
+				"Grupo: " + grupo + "\n" +
+				"Musicas: " + musicas + "\n" +
+				"Genero: " + genero + "\n" +
+				"Preço: " + price + "\n" + 
+				"Quantidade: " + unidades +"\n";
 	}
 
 }

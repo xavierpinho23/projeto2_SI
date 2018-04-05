@@ -1,6 +1,6 @@
 package trabalho2_si;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class Administrador
 {
@@ -32,94 +32,105 @@ public class Administrador
 	{
 		this.password = password;
 	}
-	
-	
+
 	//Adicionar albuns
-	public void addNewAlbum (ArrayList<Album> lista_albuns,String nome,String grupo, String[] musicas, String genero,int price, int unidades, boolean disponivel)
+	public void addNewAlbum (Loja loja, Album album)
 	{
-		//criar um album
-		Album album = new Album(nome, grupo, musicas, genero, price, unidades, disponivel);
-		//Adicionar album à lista
-		lista_albuns.add(album);
+		//Adicionar album à lista de albuns na Loja
+		loja.adicionaAlbum(album);
 	}
 	
 	//Fazer alterações no preço dos albuns (com histórico)
-	public void updateAlbumPrice(Album album, String nome, int price)
+	public void updateAlbumPrice(Loja loja, Album album, int price)
 	{
 		album.setPrice(price);
 	}
-	//Remover um album (se ainda não vendido)
-	public void removeAlbum(ArrayList<Album> lista_albuns, Album album, String nome)
+	
+	//Remover um album
+	public void eliminaAlbum(Loja loja ,Album album) 
 	{
-		if (album.getUnidades() == 1)
+		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
-			lista_albuns.remove(album);			
-		}
-		else if (album.getUnidades() > 1)
-		{
-			album.setUnidades(album.getUnidades() - 1);
-		}
-		else
-		{
-			System.out.println("Não é possível remover o album porque já foi vendido.");
+			if (loja.getLista_albuns().get(i).equals(album))
+			{
+				if(album.getUnidades() == 1)
+				{
+					loja.removeAlbum(album);
+				}
+				
+				else if(album.getUnidades() > 1)
+				{
+					album.setUnidades(album.getUnidades()-1);
+				}
+				else
+				{
+					System.out.println("O album que pretende remover não existe.");
+				}
+				
+			}
 		}
 	}
 	//Pesquisar albuns por nome
-	public Album visualizarAlbumNome (ArrayList<Album> lista_albuns, String nome)
+	public Album visualizarAlbumNome (Loja loja, Album album, String nome)
 	{
-		for (int i = 0; i<lista_albuns.size(); i++)
+		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
-			if(lista_albuns.get(i).getNome() == nome) 
+			if(loja.getLista_albuns().get(i).getNome().equals(nome)) 
 			{
-				return lista_albuns.get(i);
+				return loja.getLista_albuns().get(i);
 			}
 		}
 		return null;
 	}
 	//Pesquisar albuns por grupo
-	public Album visualizarAlbumGrupo (ArrayList<Album> lista_albuns, String grupo)
+	public Album visualizarAlbumGrupo (Loja loja, Album album, String grupo)
 	{
-		for (int i = 0; i<lista_albuns.size(); i++)
+		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
-			if(lista_albuns.get(i).getGrupo() == grupo) 
+			if(loja.getLista_albuns().get(i).getGrupo().equals(grupo)) 
 			{
-				return lista_albuns.get(i);
+				return loja.getLista_albuns().get(i);
 			}
 		}
 		return null;
 	}
 	//Pesquisar albuns por Musicas
-	public Album visualizarAlbumMusicas (ArrayList<Album> lista_albuns,  String[] musicas)
+	public Album visualizarAlbumMusicas (Loja loja, Album album, String[] musicas)
 	{
-		for (int i = 0; i<lista_albuns.size(); i++)
+		for (int i = 0; i<loja.getLista_albuns().size(); i++)
 		{
-			if(lista_albuns.get(i).getMusicas() == musicas) 
+			if(loja.getLista_albuns().get(i).getMusicas().equals(musicas)) 
 			{
-				return lista_albuns.get(i);
+				return loja.getLista_albuns().get(i);
 			}
 		}
 		return null;
 	}
 	//Pesquisar albuns por genero
-	public Album visualizarAlbumGenero (ArrayList<Album> lista_albuns,  String genero)
+	public Album visualizarAlbumGenero (Loja loja, Album album,  String genero)
 	{
-		for (int i = 0; i<lista_albuns.size(); i++)
+		for (int i = 0; i<loja.getLista_albuns().size(); i++)
 		{
-			if(lista_albuns.get(i).getGenero() == genero) 
+			if(loja.getLista_albuns().get(i).getGenero().equals(genero)) 
 			{
-				return lista_albuns.get(i);
+				return loja.getLista_albuns().get(i);
 			}
 		}
 		return null;
 	}
 	//Ver todos os albuns
-	public void listaAlbuns(ArrayList<Album> lista_albuns)
+	public void listaAlbuns(Loja loja)
 	{
-        System.out.printf("Lista dos albuns:");
-        for (int i =0; i< lista_albuns.size(); i++)
+        System.out.printf("Lista dos albuns: \n");
+        for (int i =0; i< loja.getLista_albuns().size(); i++)
         {
-        	System.out.printf("Album: %s Grupo: %s Musicas: %s Preço: %s  Unidades em stock: %s \n", lista_albuns.get(i).getNome(),lista_albuns.get(i).getGrupo(),lista_albuns.get(i).getMusicas(),lista_albuns.get(i).getPrice(),lista_albuns.get(i).getUnidades());
+        	System.out.printf("Album: %s  \n Grupo: %s  \n Musicas: %s  \n Preço: %s  \n Unidades em stock: %s \n", 
+        			loja.getLista_albuns().get(i).getNome(),
+        			loja.getLista_albuns().get(i).getGrupo(),
+        			loja.getLista_albuns().get(i).getMusicas(),
+        			loja.getLista_albuns().get(i).getPrice(),
+        			loja.getLista_albuns().get(i).getGenero(),
+        			loja.getLista_albuns().get(i).getUnidades());
         }
 	}
-
 }

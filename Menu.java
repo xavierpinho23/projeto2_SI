@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Menu
 {
 	
-	public void LogInAdministrador(Administrador admin,ArrayList<Administrador> administradores, ArrayList<Album> lista_albuns)
+	public void LogInAdministrador(Loja loja, Album album,Administrador admin,ArrayList<Administrador> administradores, ArrayList<Album> lista_albuns)
 	{
 		//Aqui é onde o ADMIN executa as suas ações! 
 		int opcao = 0;
@@ -43,85 +43,70 @@ public class Menu
 				int price = input.nextInt();
 				System.out.printf("Unidades: ");
 				int unidades = input.nextInt();
-				boolean disponivel = true;
+				
 				//Tornar o input num objeto Album
-				Album album = new Album(nome,grupo, musicas, genero,price, unidades, disponivel);
+				Album album1 = new Album(loja, nome,grupo, musicas, genero,price, unidades);
 				
 				//Verificar se o album já existe
-				if (admin.visualizarAlbumNome(lista_albuns, nome) != null)
+				if (admin.visualizarAlbumNome(loja, album1, nome) != null)
 				{
-					System.out.printf("O album %s já existe!", nome);
-					continue;
+					//caso já exista 
+					album.setUnidades(unidades);
 				}
 				else
 				{
 					//Caso não exista, é adicionado à lista de albuns
-					admin.addNewAlbum(lista_albuns, nome, grupo, musicas, genero, price, unidades, disponivel);
+					loja.adicionaAlbum(album1);
 					System.out.println("Album adicionado com sucesso!");
 				}
 				
 			}
 			if(opcao == 2)
+			//Remover um Album
 			{
-				//Remover um Album
-				//Apenas é necessario o nome para remover o album (?)
 				System.out.printf("Introduza o Album que quer remover.");
 				System.out.printf("Nome: ");
 				String nome = input.nextLine();
-				/*System.out.printf("Grupo: ");
-				String grupo = input.nextLine();
-				System.out.printf("Quantas músicas tem o album?: ");
-				int tamanho = input.nextInt();
-				String[] musicas = new String[tamanho];
-				for (int i = 0; i < musicas.length; i++)
-				{
-					musicas[i] = input.nextLine();
-				}
-				System.out.printf("Genero: ");
-				String genero = input.nextLine();
-				System.out.printf("Preço: ");
-				int price = input.nextInt();
-				System.out.printf("Unidades: ");
-				int unidades = input.nextInt();*/
 				
-				//Verificar se o album existe
-				if (admin.visualizarAlbumNome(lista_albuns, nome) != null)
+				for (int i = 0; i < loja.getLista_albuns().size(); i++)
 				{
-					boolean disponivel = true;
-					//Em vez de null tem de ser album, mas nao está a dar :/
-					admin.removeAlbum(lista_albuns , null, nome);
+					if (loja.getLista_albuns().get(i).getNome().equals(nome))
+					{
+						admin.eliminaAlbum(loja, album);					
+					}
 				}
-				else
-				{
-					System.out.printf("O Album %s que pretende remover não existe.", nome);
-				}
-				
 			}
 			if(opcao == 3)
+			//Ver a lista de todos os albuns
 			{
-				//Ver a lista de albuns
-				admin.listaAlbuns(lista_albuns);
-			}
+				admin.listaAlbuns(loja);
 			}
 			if(opcao == 4)
 			{
 				//Mudar o preço de um album
-				System.out.printf("Qual o album que pretende alterar o preço?");
+				System.out.println("Qual o album que pretende alterar o preço?");
 				String nome = input.nextLine();
-				System.out.printf("Que preço deverá custar?");
+				System.out.println("Que preço deverá custar?");
 				int price = input.nextInt();
-				//Em vez de null tem de ser album, mas nao está a dar :/
-				admin.updateAlbumPrice(null, nome, price);
+				
+				for (int i = 0; i < loja.getLista_albuns().size(); i++)
+				{
+					if (loja.getLista_albuns().get(i).getNome().equals(nome))
+					{
+						admin.updateAlbumPrice(loja, album, price);
+					}
+				}
 			}
 			if(opcao == 5)
 			{
-				;
+				System.out.println("Estatísticas:");
 			}
 			
 		}
+	}
 
 	
-	public void LogInCliente(Cliente cliente, ArrayList<Cliente> clientes, ArrayList<Album> lista_albuns, ArrayList<Album> lista_albuns_cliente)
+	public void LogInCliente(Loja loja, Album album, Cliente cliente, ArrayList<Cliente> clientes, ArrayList<Album> lista_albuns, ArrayList<Album> lista_albuns_cliente)
 	{
 		//Aqui é onde o CLIENTE executa as suas ações!
 		int opcao = 0;
@@ -140,49 +125,56 @@ public class Menu
 			System.out.printf("[8] -> Terminar sessão");
 
 			if (opcao == 1)
+			//Comprar album
 			{
-				//Ver se o album existe
 				System.out.println("Que album pretende comprar?");
 				String nome = input.nextLine();
-				if (cliente.findAlbunsName(nome) != null)
-				{
-					cliente.compraAlbum(lista_albuns,null, nome);
-					cliente.lista_albuns_cliente.add(null);
-
-					//tambem tem de se retirar o album à lista de albuns
+				
+				for (int i = 0; i < loja.getLista_albuns().size(); i++)
+					{
+					if (loja.getLista_albuns().get(i).getNome().equals(nome))
+					{
+						cliente.addCarrinho(album);
+					}
 				}
 			}
 			if (opcao == 2)
+			//Ver saldo
 			{
 				System.out.printf("O seu saldo é: " + cliente.getSaldo());
 			}
 			if (opcao == 3)
+			//Ver a lista de todos os albuns
 			{
-				System.out.printf("Lista de Albuns: \n", cliente.getLista_albuns());
+				System.out.printf("Lista de Albuns: \n", loja.getLista_albuns());
 			}
 			if (opcao == 4)
+			//Ver lista de albuns pessoal
 			{
 				System.out.printf("Lista de Albuns pessoal: \n", cliente.getLista_albuns_cliente());
 
 			}
 			if (opcao == 5)
+			//Procurar album por nome
 			{
-				System.out.printf("Introduza o nome do Album que procura: ");
+				System.out.println("Introduza o nome do Album que procura: ");
 				String nome = input.nextLine();
-				cliente.findAlbunsName(nome);
+				cliente.visualizarAlbumNome( loja,  album,  nome);
 				
 			}
 			if (opcao == 6)
+			//Procurar album por génerp
 			{
 				System.out.printf("Introduza o género do Album que procura: ");
 				String genero = input.nextLine();
-				cliente.findAlbunsGenero(genero);				
+				cliente.visualizarAlbumGenero(loja, album,genero);				
 			}
 			if (opcao == 7)
+			//Procurar album por banda
 			{
 				System.out.printf("Introduza o grupo do Album que procura: ");
 				String grupo = input.nextLine();
-				cliente.findAlbunsGroup(grupo);
+				cliente.visualizarAlbumGrupo(loja, album, grupo);
 			}
 			
 		}
