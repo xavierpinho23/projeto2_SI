@@ -13,18 +13,19 @@ public class Loja
 	{
 		return clientes;
 	}
-	public void setClientes(ArrayList<Cliente> clientes)
+	public void addClientes(Cliente cliente)
 	{
-		this.clientes = clientes;
+		this.clientes.add(cliente);
 	}
 	public ArrayList<Administrador> getAdministradores()
 	{
 		return administradores;
 	}
-	public void setAdministradores(ArrayList<Administrador> administradores)
+	public void addAdministradores(Administrador admin)
 	{
-		this.administradores = administradores;
+		this.administradores.add(admin);
 	}
+	
 	public ArrayList<Album> getLista_albuns()
 	{
 		return lista_albuns;

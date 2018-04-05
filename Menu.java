@@ -6,11 +6,116 @@ import java.util.Scanner;
 public class Menu
 {
 	
+	public void main(String[] args)
+	{
+		Loja loja = new Loja();
+		
+		System.out.println("Bem Vindo!");
+		
+		int opcao = 0;
+		int escolha = 0;
+		Scanner input = new Scanner(System.in);
+		
+		while (opcao!=1 || opcao!= 2 || opcao != 3)
+		{
+			System.out.println("Escolha 1 para Registo ou 2 para LogIn ou 3 para sair.");
+			opcao = input.nextInt();
+			input.nextLine();
+			if (opcao!=1 || opcao!= 2 || opcao != 3)
+			{
+				System.out.println("Input Inválido.");
+			}
+		}
+		
+		while (opcao == 1)
+		{
+			 System.out.println("Escolha 1 para Administrador e 2 para Cliente.");
+			 escolha = input.nextInt();
+			 input.nextLine();
+			 
+			 while (escolha == 1)
+				 //Registo Administrador
+			 {
+				 System.out.println("Introduza o username: ");
+				 String username = input.nextLine();
+				 
+				 System.out.println("Introduza o password: ");
+				 String password = input.nextLine();
+				 
+
+				 for (int i = 0; i < loja.getAdministradores().size() ; i++)
+				 {
+					 if (loja.getAdministradores().get(i).getUsername().equals(username))
+					 {
+						 System.out.println("O username já existe.Insira dados novamente.");
+					 }
+					 else
+					 {
+						 Administrador admin = new Administrador(username, password);
+						 loja.addAdministradores(admin);
+						 
+						 System.out.println("Registo bem sucedido");
+						 opcao = 0;
+					 }
+				 }
+			 }
+			 while (escolha == 2)
+				 //Registo Cliente
+			 {
+				 System.out.println("Introduza o username: ");
+				 String username = input.nextLine();
+				 
+				 System.out.println("Introduza o password: ");
+				 String password = input.nextLine();
+				 
+
+				 for (int i = 0; i < loja.getClientes().size() ; i++)
+				 {
+					 if (loja.getClientes().get(i).getUsername().equals(username))
+					 {
+						 System.out.println("O username já existe. Insira dados novamente");
+					 }
+					 else
+					 {
+						 Cliente cliente = new Cliente(username, password);
+						 loja.addClientes(cliente);
+						 System.out.println("Registo bem sucedido.");
+						 opcao = 0;
+					 }
+				 }
+			 }
+			 if (escolha!= 1 || escolha!= 2)
+			 {
+				 System.out.println("Escolha uma opção válida.");
+			}
+			 
+			 
+		 }
+		while (opcao == 2)
+		{
+			 System.out.println("Introduza o username: ");
+			 String username = input.nextLine();
+			 
+			 System.out.println("Introduza o password: ");
+			 String password = input.nextLine();
+					 
+			 for (int i = 0; i < loja.getClientes().size() ; i++)
+			 {
+				 if (loja.getClientes().get(i).getUsername().equals(username) && loja.getClientes().get(i).getPassword().equals(password))
+				 {
+					 System.out.println("Bem vindo cliente: " + username);
+					 Cliente cliente = loja.getClientes().get(i);
+					 LogInCliente(loja, cliente);
+				 }
+			}
+		}
+	}
+	
 	public void LogInAdministrador(Loja loja, Album album,Administrador admin,ArrayList<Administrador> administradores, ArrayList<Album> lista_albuns)
 	{
 		//Aqui é onde o ADMIN executa as suas ações! 
-		int opcao = 0;
-		Scanner input = new Scanner(System.in);
+		
+		
 		while (opcao!=6)
 		{
 			System.out.printf("Bem Vindo à Vinyl Records Lda. administrador %s ! \n", admin.getUsername());
@@ -105,8 +210,7 @@ public class Menu
 		}
 	}
 
-	
-	public void LogInCliente(Loja loja, Album album, Cliente cliente, ArrayList<Cliente> clientes, ArrayList<Album> lista_albuns, ArrayList<Album> lista_albuns_cliente)
+	public void LogInCliente(Loja loja, Cliente cliente>)
 	{
 		//Aqui é onde o CLIENTE executa as suas ações!
 		int opcao = 0;

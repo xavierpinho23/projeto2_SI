@@ -11,12 +11,11 @@ public class Cliente
     private ArrayList<Album> carrinho = new ArrayList<Album>(); //carrinho de compras
     //private ArrayList<Album> lista_albuns = new ArrayList<Album>(); //Todos os albuns
 
-	public Cliente(String username, String password, int saldo, ArrayList<Album> lista_albuns_cliente)
+	public Cliente(String username, String password)
 	{
 		this.username = username;
         this.password = password;
-        this.saldo = saldo;
-        this.lista_albuns_cliente = lista_albuns_cliente;
+        this.saldo = 100;
 	}
 	public ArrayList<Album> getCarrinho()
 	{
