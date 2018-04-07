@@ -63,6 +63,18 @@ public class Loja
 			}
 		}
 	}
+	public void atualizaUnidades(Album album)
+	{
+		for (int i = 0; i < getLista_albuns().size(); i++)
+		{
+			String nome = album.getNome();
+			if (getLista_albuns().get(i).getNome().equals(nome))
+			{
+				lista_albuns.remove(i);
+				lista_albuns.add(i, album);
+			}
+		}
+	}
     
     
 

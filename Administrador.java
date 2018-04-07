@@ -36,31 +36,58 @@ public class Administrador
 	//Adicionar albuns
 	public void addNewAlbum (Loja loja, Album album)
 	{
-		//Adicionar album à lista de albuns na Loja
-		loja.adicionaAlbum(album);
+		String nome = album.getNome();
+		int unidades = album.getUnidades();
+		
+		if (visualizarAlbumNome(loja, nome) != null)
+		{					
+			//caso já exista 
+			System.out.printf("O album que pretende adicionar já existe e foram adicionadas " + unidades + "unidades.");
+			album.setUnidades(album.getUnidades() + unidades);
+			loja.atualizaUnidades(album);
+		}
+		else
+		{
+			//Caso não exista, é adicionado à lista de albuns
+			loja.adicionaAlbum(album);
+			System.out.println("Album adicionado com sucesso!");
+		}
+	
 	}
 	
 	//Fazer alterações no preço dos albuns (com histórico)
 	public void updateAlbumPrice(Loja loja, Album album, int price)
 	{
-		album.setPrice(price);
+		if (album != null)
+			//se existe
+		{
+			System.out.println("O preço do album foi atualizado com sucesso.");
+			System.out.println("O album que custava " + album.getPrice() + "custa agora " + price);
+			album.setPrice(price);
+		}
+		else
+		//caso o album não exista
+		{
+			System.out.println("O album que pretende alterar o preço não existe.");
+		}
 	}
 	
 	//Remover um album
-	public void eliminaAlbum(Loja loja ,Album album) 
+	public void eliminaAlbum(Loja loja ,Album album, int unidades) 
 	{
 		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
 			if (loja.getLista_albuns().get(i).equals(album))
 			{
-				if(album.getUnidades() == 1)
+				if(album.getUnidades() == unidades)
 				{
 					loja.removeAlbum(album);
 				}
 				
-				else if(album.getUnidades() > 1)
+				else if(album.getUnidades() > unidades)
 				{
-					album.setUnidades(album.getUnidades()-1);
+					album.setUnidades(album.getUnidades()-unidades);
+					loja.atualizaUnidades(album);
 				}
 				else
 				{
@@ -71,7 +98,7 @@ public class Administrador
 		}
 	}
 	//Pesquisar albuns por nome
-	public Album visualizarAlbumNome (Loja loja, Album album, String nome)
+	public Album visualizarAlbumNome (Loja loja, String nome)
 	{
 		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
@@ -83,7 +110,7 @@ public class Administrador
 		return null;
 	}
 	//Pesquisar albuns por grupo
-	public Album visualizarAlbumGrupo (Loja loja, Album album, String grupo)
+	public Album visualizarAlbumGrupo (Loja loja, String grupo)
 	{
 		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
@@ -95,7 +122,7 @@ public class Administrador
 		return null;
 	}
 	//Pesquisar albuns por Musicas
-	public Album visualizarAlbumMusicas (Loja loja, Album album, String[] musicas)
+	public Album visualizarAlbumMusicas (Loja loja, String[] musicas)
 	{
 		for (int i = 0; i<loja.getLista_albuns().size(); i++)
 		{
@@ -107,7 +134,7 @@ public class Administrador
 		return null;
 	}
 	//Pesquisar albuns por genero
-	public Album visualizarAlbumGenero (Loja loja, Album album,  String genero)
+	public Album visualizarAlbumGenero (Loja loja,  String genero)
 	{
 		for (int i = 0; i<loja.getLista_albuns().size(); i++)
 		{

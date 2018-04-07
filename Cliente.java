@@ -81,33 +81,33 @@ public class Cliente
 	}
 		
 	//adiciona albuns ao carrinho
-	public void adicionaAlbum(Loja loja ,Album album) 
+	public void adicionaAlbum(Loja loja ,Album album, int unidades) 
 	{
 		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
 			if (loja.getLista_albuns().get(i).equals(album))
 			{
-				if(album.getUnidades() == 1)
+				if(album.getUnidades() == unidades)
 				{
 					loja.removeAlbum(album);
 					addCarrinho(album);
 				}
 				
-			else if(album.getUnidades() > 1)
+			else if(album.getUnidades() > unidades)
 			{
 				album.setUnidades(album.getUnidades()-1);
 				addCarrinho(album);
 			}
 			else
 			{
-				System.out.println("Não é possível remover o album porque já não existe.");
+				System.out.println("Não é possível adicionar o album ao carrinho.");
 			}	
 				
 			}
 		}
 	}
 	//Pesquisar albuns por nome
-		public Album visualizarAlbumNome (Loja loja, Album album, String nome)
+		public Album visualizarAlbumNome (Loja loja, String nome)
 		{
 			for (int i = 0; i < loja.getLista_albuns().size(); i++)
 			{
@@ -119,7 +119,7 @@ public class Cliente
 			return null;
 		}
 		//Pesquisar albuns por grupo
-		public Album visualizarAlbumGrupo (Loja loja, Album album, String grupo)
+		public Album visualizarAlbumGrupo (Loja loja, String grupo)
 		{
 			for (int i = 0; i < loja.getLista_albuns().size(); i++)
 			{
@@ -131,7 +131,7 @@ public class Cliente
 			return null;
 		}
 		//Pesquisar albuns por Musicas
-		public Album visualizarAlbumMusicas (Loja loja, Album album, String[] musicas)
+		public Album visualizarAlbumMusicas (Loja loja, String[] musicas)
 		{
 			for (int i = 0; i<loja.getLista_albuns().size(); i++)
 			{
@@ -143,7 +143,7 @@ public class Cliente
 			return null;
 		}
 		//Pesquisar albuns por genero
-		public Album visualizarAlbumGenero (Loja loja, Album album,  String genero)
+		public Album visualizarAlbumGenero (Loja loja,  String genero)
 		{
 			for (int i = 0; i<loja.getLista_albuns().size(); i++)
 			{

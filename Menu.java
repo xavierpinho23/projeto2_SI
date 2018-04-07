@@ -28,6 +28,7 @@ public class Menu
 		}
 		
 		while (opcao == 1)
+			//Registo
 		{
 			 System.out.println("Escolha 1 para Administrador e 2 para Cliente.");
 			 escolha = input.nextInt();
@@ -92,6 +93,7 @@ public class Menu
 			 
 		 }
 		while (opcao == 2)
+			//Log In
 		{
 			 System.out.println("Introduza o username: ");
 			 String username = input.nextLine();
@@ -107,18 +109,25 @@ public class Menu
 					 Cliente cliente = loja.getClientes().get(i);
 					 LogInCliente(loja, cliente);
 				 }
+				 else if (loja.getAdministradores().get(i).getUsername().equals(username) && loja.getAdministradores().get(i).getPassword().equals(password))
+				 {
+					 System.out.println("Bem vindo administrador: " + username);
+					 Administrador admin = loja.getAdministradores().get(i);
+					 LogInAdministrador(loja, admin);
+				 }
 			}
-		}
-	}
-	
-	public void LogInAdministrador(Loja loja, Album album,Administrador admin,ArrayList<Administrador> administradores, ArrayList<Album> lista_albuns)
+		}		
+		
+	}	
+	public void LogInAdministrador(Loja loja,Administrador admin)
 	{
-		//Aqui é onde o ADMIN executa as suas ações! 
+		int opcao = 0;
+		Scanner input = new Scanner(System.in);
 		
-		
+		System.out.printf("Bem Vindo à Vinyl Records Lda. administrador %s ! \n", admin.getUsername());
+
 		while (opcao!=6)
 		{
-			System.out.printf("Bem Vindo à Vinyl Records Lda. administrador %s ! \n", admin.getUsername());
 			System.out.printf("Escolha uma das seguintes opções: \n");
 			System.out.printf("[1] -> Adicionar um Album");
 			System.out.printf("[2] -> Remover um Album");
@@ -126,6 +135,9 @@ public class Menu
 			System.out.printf("[4] -> Mudar o preço de um Album");
 			System.out.printf("[5] -> Visiualizar estatísticas");
 			System.out.printf("[6] -> Terminar sessão");
+			
+			opcao = input.nextInt();
+			input.nextLine();
 			
 			if(opcao == 1)
 			{
@@ -140,6 +152,7 @@ public class Menu
 				String[] musicas = new String[tamanho];
 				for (int i = 0; i < musicas.length; i++)
 				{
+					System.out.printf("Música " + i+1 + ":");
 					musicas[i] = input.nextLine();
 				}
 				System.out.printf("Genero: ");
@@ -150,20 +163,12 @@ public class Menu
 				int unidades = input.nextInt();
 				
 				//Tornar o input num objeto Album
-				Album album1 = new Album(loja, nome,grupo, musicas, genero,price, unidades);
+				Album album = new Album(loja, nome,grupo, musicas, genero,price, unidades);
 				
-				//Verificar se o album já existe
-				if (admin.visualizarAlbumNome(loja, album1, nome) != null)
-				{
-					//caso já exista 
-					album.setUnidades(unidades);
-				}
-				else
-				{
-					//Caso não exista, é adicionado à lista de albuns
-					loja.adicionaAlbum(album1);
-					System.out.println("Album adicionado com sucesso!");
-				}
+				//Verificar se o album existe e adicionar
+				admin.addNewAlbum(loja, album);
+				
+				opcao = 0;
 				
 			}
 			if(opcao == 2)
@@ -172,35 +177,30 @@ public class Menu
 				System.out.printf("Introduza o Album que quer remover.");
 				System.out.printf("Nome: ");
 				String nome = input.nextLine();
+				System.out.printf("Quantidade de unidades que deseja remover?");
+				int unidades = input.nextInt();
+				input.nextLine();
 				
-				for (int i = 0; i < loja.getLista_albuns().size(); i++)
-				{
-					if (loja.getLista_albuns().get(i).getNome().equals(nome))
-					{
-						admin.eliminaAlbum(loja, album);					
-					}
-				}
+				Album album = admin.visualizarAlbumNome(loja, nome);
+
+				admin.eliminaAlbum(loja, album, unidades);
 			}
+			
 			if(opcao == 3)
 			//Ver a lista de todos os albuns
 			{
 				admin.listaAlbuns(loja);
 			}
 			if(opcao == 4)
-			{
 				//Mudar o preço de um album
-				System.out.println("Qual o album que pretende alterar o preço?");
+			{
+				System.out.println("Qual o nome do album que pretende alterar o preço?");
 				String nome = input.nextLine();
 				System.out.println("Que preço deverá custar?");
 				int price = input.nextInt();
 				
-				for (int i = 0; i < loja.getLista_albuns().size(); i++)
-				{
-					if (loja.getLista_albuns().get(i).getNome().equals(nome))
-					{
-						admin.updateAlbumPrice(loja, album, price);
-					}
-				}
+				Album album = admin.visualizarAlbumNome(loja, nome);
+				admin.updateAlbumPrice(loja, album, price);
 			}
 			if(opcao == 5)
 			{
@@ -210,23 +210,24 @@ public class Menu
 		}
 	}
 
-	public void LogInCliente(Loja loja, Cliente cliente>)
+	public void LogInCliente(Loja loja, Cliente cliente)
 	{
 		//Aqui é onde o CLIENTE executa as suas ações!
 		int opcao = 0;
 		Scanner input = new Scanner(System.in);
-		while (opcao!=8)
+		
+		System.out.printf("Bem Vindo à Vinyl Records Lda. cliente %s ! \n", cliente.getUsername());
+
+		while (opcao!=6)
 		{
-			System.out.printf("Bem Vindo à Vinyl Records Lda. cliente %s ! \n", cliente.getUsername());
 			System.out.printf("Escolha uma das seguintes opções: \n");
-			System.out.printf("[1] -> Comprar um Album");
-			System.out.printf("[2] -> Ver saldo");
-			System.out.printf("[3] -> Ver a lista de Albuns");
-			System.out.printf("[4] -> Ver lista de Albuns pessoal");
-			System.out.printf("[5] -> Procurar Album por nome");
-			System.out.printf("[6] -> Procurar Album por género");
-			System.out.printf("[7] -> Procurar Album por grupo");
-			System.out.printf("[8] -> Terminar sessão");
+			System.out.printf("[1] -> Ver Lista de Albums");
+			System.out.printf("[2] -> Procurar Album por nome");
+			System.out.printf("[3] -> Procurar Album por género");
+			System.out.printf("[4] -> Procurar Album por grupo");
+			System.out.printf("[5] -> Ver dados da conta");
+			System.out.printf("[6] -> Finalizar compra");
+			System.out.printf("[7] -> Terminar sessão");
 
 			if (opcao == 1)
 			//Comprar album
@@ -234,13 +235,8 @@ public class Menu
 				System.out.println("Que album pretende comprar?");
 				String nome = input.nextLine();
 				
-				for (int i = 0; i < loja.getLista_albuns().size(); i++)
-					{
-					if (loja.getLista_albuns().get(i).getNome().equals(nome))
-					{
-						cliente.addCarrinho(album);
-					}
-				}
+				Album album = cliente.visualizarAlbumNome(loja, nome);
+				
 			}
 			if (opcao == 2)
 			//Ver saldo
@@ -263,7 +259,7 @@ public class Menu
 			{
 				System.out.println("Introduza o nome do Album que procura: ");
 				String nome = input.nextLine();
-				cliente.visualizarAlbumNome( loja,  album,  nome);
+				cliente.visualizarAlbumNome( loja,  nome);
 				
 			}
 			if (opcao == 6)
@@ -271,14 +267,14 @@ public class Menu
 			{
 				System.out.printf("Introduza o género do Album que procura: ");
 				String genero = input.nextLine();
-				cliente.visualizarAlbumGenero(loja, album,genero);				
+				cliente.visualizarAlbumGenero(loja,genero);				
 			}
 			if (opcao == 7)
 			//Procurar album por banda
 			{
 				System.out.printf("Introduza o grupo do Album que procura: ");
 				String grupo = input.nextLine();
-				cliente.visualizarAlbumGrupo(loja, album, grupo);
+				cliente.visualizarAlbumGrupo(loja, grupo);
 			}
 			
 		}
