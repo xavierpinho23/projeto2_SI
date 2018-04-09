@@ -6,10 +6,10 @@ public class Album
 	private String grupo;
 	private String [] musicas;
 	private String genero;
-	private int price;
+	private double price;
 	private int unidades;
 
-	public Album(Loja loja,String nome, String grupo, String[] musicas, String genero,int price, int unidades)
+	public Album(String nome, String grupo, String[] musicas, String genero,double price, int unidades)
 	{
 		this.nome = nome;
 		this.grupo = grupo;
@@ -34,11 +34,11 @@ public class Album
 	{
 		this.unidades = unidades;
 	}
-	public int getPrice()
+	public double getPrice()
 	{
 		return price;
 	}
-	public void setPrice(int price)
+	public void setPrice(double price)
 	{
 		this.price = price;
 	}

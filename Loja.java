@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 public class Loja
 {
-	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-	private ArrayList<Administrador> administradores = new ArrayList<Administrador>();
-	private ArrayList<Album> lista_albuns = new ArrayList<Album>();
-	private ArrayList<Album> lista_vendidos = new ArrayList<Album>();
+	//private
+	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	public ArrayList<Administrador> administradores = new ArrayList<Administrador>();
+	public ArrayList<Album> lista_albuns = new ArrayList<Album>();
+	public ArrayList<Album> lista_vendidos = new ArrayList<Album>();
 	
+
+    
 	public ArrayList<Cliente> getClientes()
 	{
 		return clientes;
@@ -38,9 +41,9 @@ public class Loja
 	{
 		return lista_vendidos;
 	}
-	public void setLista_vendidos(ArrayList<Album> lista_vendidos)
+	public void addLista_vendidos(Album album)
 	{
-		this.lista_vendidos = lista_vendidos;
+		this.lista_vendidos.add(album);
 	}
 	
 	public void removeAlbum (Album album)
@@ -55,13 +58,7 @@ public class Loja
 	}
 	public void adicionaAlbum (Album album)
 	{
-		for (int i = 0; i < getLista_albuns().size(); i++)
-		{
-			if (getLista_albuns().get(i).equals(album))
-			{
-				lista_albuns.add(album);
-			}
-		}
+		lista_albuns.add(album);
 	}
 	public void atualizaUnidades(Album album)
 	{

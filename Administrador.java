@@ -102,7 +102,8 @@ public class Administrador
 	{
 		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
-			if(loja.getLista_albuns().get(i).getNome().equals(nome)) 
+			//acrescentei o LowerCase() para as comparações
+			if(loja.getLista_albuns().get(i).getNome().toLowerCase().equals(nome.toLowerCase())) 
 			{
 				return loja.getLista_albuns().get(i);
 			}
@@ -114,7 +115,8 @@ public class Administrador
 	{
 		for (int i = 0; i < loja.getLista_albuns().size(); i++)
 		{
-			if(loja.getLista_albuns().get(i).getGrupo().equals(grupo)) 
+			//acrescentei o LowerCase() para as comparações
+			if(loja.getLista_albuns().get(i).getGrupo().toLowerCase().equals(grupo.toLowerCase())) 
 			{
 				return loja.getLista_albuns().get(i);
 			}
@@ -122,13 +124,18 @@ public class Administrador
 		return null;
 	}
 	//Pesquisar albuns por Musicas
-	public Album visualizarAlbumMusicas (Loja loja, String[] musicas)
+	public Album visualizarAlbumMusicas (Loja loja,String musica)
 	{
 		for (int i = 0; i<loja.getLista_albuns().size(); i++)
 		{
-			if(loja.getLista_albuns().get(i).getMusicas().equals(musicas)) 
+			String[] musicas = loja.getLista_albuns().get(i).getMusicas();
+			for (int j = 0; j<loja.getLista_albuns().size(); j++) 
 			{
-				return loja.getLista_albuns().get(i);
+				//acrescentei o LowerCase() para as comparações
+				if (musicas[j].toLowerCase().equals(musica.toLowerCase()))
+				{
+					return loja.getLista_albuns().get(i);
+				}
 			}
 		}
 		return null;
@@ -138,7 +145,8 @@ public class Administrador
 	{
 		for (int i = 0; i<loja.getLista_albuns().size(); i++)
 		{
-			if(loja.getLista_albuns().get(i).getGenero().equals(genero)) 
+			//acrescentei o LowerCase() para as comparações
+			if(loja.getLista_albuns().get(i).getGenero().toLowerCase().equals(genero.toLowerCase())) 
 			{
 				return loja.getLista_albuns().get(i);
 			}
