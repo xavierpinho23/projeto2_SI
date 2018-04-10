@@ -4,49 +4,160 @@ import java.util.ArrayList;
 
 public class Loja
 {
-	//private
 	public ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	public ArrayList<Administrador> administradores = new ArrayList<Administrador>();
 	public ArrayList<Album> lista_albuns = new ArrayList<Album>();
 	public ArrayList<Album> lista_vendidos = new ArrayList<Album>();
-	
 
-    
 	public ArrayList<Cliente> getClientes()
 	{
 		return clientes;
 	}
+
 	public void addClientes(Cliente cliente)
 	{
 		this.clientes.add(cliente);
 	}
+
 	public ArrayList<Administrador> getAdministradores()
 	{
 		return administradores;
 	}
+
 	public void addAdministradores(Administrador admin)
 	{
 		this.administradores.add(admin);
 	}
-	
+
 	public ArrayList<Album> getLista_albuns()
 	{
 		return lista_albuns;
 	}
+
 	public void setLista_albuns(ArrayList<Album> lista_albuns)
 	{
 		this.lista_albuns = lista_albuns;
 	}
+
 	public ArrayList<Album> getLista_vendidos()
 	{
 		return lista_vendidos;
 	}
+
+	public double dinheiroGastoTotal()
+	{
+		double dinheiroGasto = 0;
+
+		for (int i = 0; i < lista_vendidos.size(); i++)
+		{
+			dinheiroGasto = dinheiroGasto
+					+ getLista_vendidos().get(i).getPrice() * getLista_vendidos().get(i).getUnidades();
+		}
+		return dinheiroGasto;
+	}
+
+	public void dinheiroGastoGenero()
+	// estatistica de dinheiro gasto por genero de albums
+	{
+		ArrayList<Double> dinheiroGenero = new ArrayList<Double>();
+		ArrayList<String> generos = new ArrayList<String>();
+
+		double preço = 0;
+
+		if (lista_vendidos.isEmpty())
+		{
+			System.out.println("Ainda não foram vendidos quaisquer Albums.");
+			return;
+		}
+		if (dinheiroGenero.isEmpty())
+		{
+			generos.add(getLista_vendidos().get(0).getGenero());
+			preço = getLista_vendidos().get(0).getUnidades() * getLista_vendidos().get(0).getPrice();
+			dinheiroGenero.add(preço);
+		}
+
+		for (int i = 1; i < getLista_vendidos().size(); i++)
+		{
+			for (int j = 0; j < generos.size(); j++)
+			{
+				if (generos.get(j).equals(getLista_vendidos().get(i).getGenero()))
+				{
+					preço = dinheiroGenero.get(j)
+							+ getLista_vendidos().get(j).getUnidades() * getLista_vendidos().get(j).getPrice();
+					dinheiroGenero.remove(j);
+					dinheiroGenero.add(j, preço);
+				}
+				else
+				{
+					generos.add(j, getLista_vendidos().get(i).getGenero());
+					preço = getLista_vendidos().get(j).getUnidades() * getLista_vendidos().get(j).getPrice();
+					dinheiroGenero.add(preço);
+					break;
+				}
+			}
+		}
+		for (int i = 0; i < dinheiroGenero.size(); i++)
+		{
+			System.out.printf("Foi gasto %s € em Albums do género %s .\n", dinheiroGenero.get(i), generos.get(i));
+		}
+	}
+
+	public int albunsStock()
+	{
+		int sum = 0;
+		for (int i = 0; i < getLista_albuns().size(); i++)
+		{
+			sum = sum + getLista_albuns().get(i).getUnidades();
+		}
+		return sum;
+	}
+
+	public void albunsStockGenero()
+	{
+		ArrayList<String> generos = new ArrayList<String>();
+		ArrayList<Integer> contador = new ArrayList<Integer>();
+
+		if (generos.isEmpty())
+		// generos vazio
+		{
+			generos.add(getLista_albuns().get(0).getGenero());
+			contador.add(getLista_albuns().get(0).getUnidades());
+		}
+
+		// se o generos não estiver vazio
+		for (int i = 1; i < getLista_albuns().size(); i++)
+		// i = 1 porque ja correu o outro la em cima
+		{
+			for (int j = 0; j < generos.size(); j++)
+			{
+				if (generos.get(j).equals(getLista_albuns().get(i).getGenero()))
+				{
+					// contar o numero de albums por cada género caso o género ja exista em generos
+					int valor = contador.get(j) + getLista_albuns().get(i).getUnidades();
+					contador.remove(j);
+					contador.add(j, valor);
+				}
+				else
+				{
+					// contar o numero de albums por genero quando o genero ainda nao existe em generos
+					generos.add(j, getLista_albuns().get(i).getGenero());
+					contador.add(j, getLista_albuns().get(i).getUnidades());
+					break;
+				}
+			}
+		}
+		for (int i = 0; i < generos.size(); i++)
+		{
+			System.out.printf("Existem %s unidades do género %s .\n", contador.get(i), generos.get(i));
+		}
+	}
+
 	public void addLista_vendidos(Album album)
 	{
 		this.lista_vendidos.add(album);
 	}
-	
-	public void removeAlbum (Album album)
+
+	public void removeAlbum(Album album)
 	{
 		for (int i = 0; i < getLista_albuns().size(); i++)
 		{
@@ -56,10 +167,12 @@ public class Loja
 			}
 		}
 	}
-	public void adicionaAlbum (Album album)
+
+	public void adicionaAlbum(Album album)
 	{
 		lista_albuns.add(album);
 	}
+
 	public void atualizaUnidades(Album album)
 	{
 		for (int i = 0; i < getLista_albuns().size(); i++)
@@ -72,51 +185,4 @@ public class Loja
 			}
 		}
 	}
-    
-    
-
-    //Menu menu = new Menu();
-        
-//        String musicas1[] = {"Cigaro", "BYOB"};
-//        String musicas2[] = {"olaola", "oleole"};
-//        //String albuns_cliente1[] = {"yeeee","yoooo"};
-//        
-//
-//        Album album1 = new Album("Toxicity","SOAD",musicas1,"Rock",5,10,true);
-//        Administrador admin = new Administrador("admin1","123"); 
-//        Cliente cliente = new Cliente("cliente1","321", 10,null);
-//        
-//        lista_albuns.add(album1);
-//        administradores.add(admin);
-//        clientes.add(cliente);
-//        lista_albuns_cliente.add(album1);
-//        
-//         //Adicionar Albuns à loja através do administrador
-//        admin.addNewAlbum(lista_albuns,"Mesmerize","SOAD",musicas2,"Metal",4,9,true);
-//        
-//        //Ver a lista de albuns
-//        admin.listaAlbuns(lista_albuns);
-//        
-//        //Testar setters and getters
-//        System.out.println("Grupo: " + album1.getGrupo());
-//        System.out.println("Genero: " + album1.getGenero());
-//        //System.out.println("Musicas: " + Arrays.deepToString(album1.getMusicas()));
-//        //System.out.println("Musicas: " + album1.getMusica);
-//
-//        System.out.println("Nome: "+ album1.getNome());
-//        System.out.println("Preço: "+ album1.getPrice());
-//        System.out.println("Unidades: "+ album1.getUnidades());
-//
-//        //Remover o album da lista de albuns através do admin
-//        admin.removeAlbum(lista_albuns, album1,"Toxicity");
-//        //System.out.println("blabla" + lista_albuns);
-//
-//        //Cliente
-//        System.out.println(cliente.findAlbunsName("Mesmerize"));
-//        System.out.println(cliente.findAlbunsGroup("SOAD"));
-//        System.out.println(cliente.findAlbunsGenero("Rock"));
-//        System.out.println(cliente.getSaldo());
-//        System.out.println(cliente.getLista_albuns_cliente());
-//        System.out.println(cliente.getPassword());
-//        System.out.println(cliente.getUsername());
-	}
+}
