@@ -89,5 +89,4 @@ public class Album
 				"Preço: "      + price    + "\n" + 
 				"Quantidade: " + unidades + "\n";
 	}
-
 }

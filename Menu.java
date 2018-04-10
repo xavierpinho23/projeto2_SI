@@ -4,28 +4,28 @@ import java.util.Scanner;
 
 public class Menu
 {
-
 	public static void main(String[] args)
 	{
-
-		Loja loja = new Loja();
-
+		Loja loja = new Loja();		//Inicialiar a Loja
+		
+		//Criação de 2 Arrays com músicas para adicionar aos Albums
 		String musicas1[] = { "Cigaro", "BYOB" };
 		String musicas2[] = { "olaola", "oleole" };
-
-		Album album1 = new Album("Toxicity", "SOAD", musicas1, "Rock", 5, 10);
-		Album album2 = new Album("Mesmerize", "SOAD", musicas2, "Metal", 4, 9);
-		Administrador admin = new Administrador();
-		Cliente cliente1 = new Cliente("cliente1", "321");
-		loja.lista_albuns.add(album1);
-		loja.lista_albuns.add(album2);
-		loja.administradores.add(admin);
-		loja.clientes.add(cliente1);
-		cliente1.addLista_albuns_cliente(album1);
-		cliente1.addLista_albuns_cliente(album2);
+		
+		Album album1 = new Album("Toxicity", "SOAD", musicas1, "Rock", 5, 10); 		//Criação de 1 um Album
+		Album album2 = new Album("Mesmerize", "SOAD", musicas2, "Metal", 4, 9);		//Criação de outro Album
+		
+		Administrador admin = new Administrador();			//Criação do Administrador
+		Cliente cliente1 = new Cliente("cliente1", "321");	//Criação de um Cliente
+		
+		loja.listaAlbuns.add(album1); 		//Adicionar o album1 à Lista de Albuns
+		loja.listaAlbuns.add(album2); 		//Adicionar o album2 à Lista de Albuns
+		loja.administradores.add(admin);	//Adicionar o Administrador à Lista de Administradores
+		loja.clientes.add(cliente1);		//Adicionar o cliente1 à Lista de Clientes
 
 		int decisao = 0;
 		int escolha = 0;
+		
 		Scanner input = new Scanner(System.in);
 
 		while (decisao != 1 && decisao != 2 && decisao != 3)
@@ -38,16 +38,17 @@ public class Menu
 			{
 				System.out.println("Input Inválido.");
 			}
-
-			while (decisao == 1)
-			// Cliente
+			
+			//Cliente
+			while (decisao == 1)		
 			{
 				System.out.println("Escolha 1 para Registo e 2 para LogIn.");
 				escolha = input.nextInt();
 				input.nextLine();
-
+				
+				//Registo
 				while (escolha == 1)
-				// Registo Cliente
+				
 				{
 					boolean exists = false;
 					System.out.println("Introduza o username: ");
@@ -73,13 +74,13 @@ public class Menu
 						loja.addClientes(cliente);
 
 						System.out.println("Registo bem sucedido");
-						LogInCliente(loja, cliente);
-						decisao = 0;
+						LogInCliente(loja, cliente);	
+						decisao = 0; 	//Faz com que volte ao Menu Inicial
 						escolha = 0;
 					}
 				}
+				//LogIn
 				while (escolha == 2)
-				// LogIn Cliente
 				{
 					System.out.println("Introduza o username: ");
 					String username = input.nextLine();
@@ -89,12 +90,11 @@ public class Menu
 
 					for (int i = 0; i < loja.getClientes().size(); i++)
 					{
-						if (loja.getClientes().get(i).getUsername().equals(username)
-								&& loja.getClientes().get(i).getPassword().equals(password))
+						if (loja.getClientes().get(i).getUsername().equals(username) && loja.getClientes().get(i).getPassword().equals(password))
 						{
 							System.out.println("Bem vindo cliente: " + username);
 							Cliente cliente = loja.getClientes().get(i);
-							LogInCliente(loja, cliente);
+							LogInCliente(loja, cliente); //Envia para o Menu do Cliente
 						}
 						else
 						{
@@ -103,20 +103,19 @@ public class Menu
 					}
 				}
 			}
+			//Administrador
 			while (decisao == 2)
-			// Administrador
 			{
-				LogInAdministrador(loja, admin);
-				decisao = 0;
+				LogInAdministrador(loja, admin); //Envia para o Menu do Administrador
+				decisao = 0; 					 //Faz com que volte ao Menu Inicial
 
 			}
 		}
 		input.close();
 	}
-
+	//Menu do Administrador
 	public static void LogInAdministrador(Loja loja, Administrador admin)
 	{
-		// Menu do Administrador
 		int opcao = 0;
 		Scanner input = new Scanner(System.in);
 
@@ -134,10 +133,10 @@ public class Menu
 
 			opcao = input.nextInt();
 			input.nextLine();
-
+			
+			//Adicionar Album
 			if (opcao == 1)
 			{
-				// Adicionar um Album
 				System.out.printf("Introduza o Album que quer adicionar. \n");
 				System.out.printf("Nome: \n");
 				String nome = input.nextLine();
@@ -159,15 +158,12 @@ public class Menu
 				System.out.printf("Unidades: \n");
 				int unidades = input.nextInt();
 
-				// Tornar o input num objeto Album
 				Album album = new Album(nome, grupo, musicas, genero, price, unidades);
-
-				// Verificar se o album existe e adicionar
-				admin.addNewAlbum(loja, album);
-
+				
+				admin.addNewAlbum(loja, album); //Verificar se o Album existe e adicioná-lo à Lista de Albuns
 			}
+			//Remover um Album
 			if (opcao == 2)
-			// Remover um Album
 			{
 				System.out.printf("Introduza o Album que quer remover. \n");
 				System.out.printf("Nome: ");
@@ -180,14 +176,13 @@ public class Menu
 
 				admin.eliminaAlbum(loja, album, unidades);
 			}
-
+			//Ver a Lista de Albuns
 			if (opcao == 3)
-			// Ver a lista de todos os albuns
 			{
 				admin.listaAlbuns(loja);
 			}
+			//Mudar o Preço de um Album
 			if (opcao == 4)
-			// Mudar o preço de um album
 			{
 				System.out.println("Qual o nome do album que pretende alterar o preço?");
 				String nome = input.nextLine();
@@ -197,6 +192,7 @@ public class Menu
 				Album album = admin.visualizarAlbumNome(loja, nome);
 				admin.updateAlbumPrice(loja, album, price);
 			}
+			//Estatísticas
 			if (opcao == 5)
 			{
 				System.out.println("Estatísticas: \n");
@@ -206,18 +202,17 @@ public class Menu
 				loja.dinheiroGastoGenero();
 
 			}
+			//Terminar Sessão
 			if (opcao == 6)
 			{
 				return;
 			}
 			input.close();
 		}
-
 	}
-
+	//Menu do Cliente
 	public static void LogInCliente(Loja loja, Cliente cliente)
 	{
-		// Menu do Cliente
 		int opcao = 0;
 		Scanner input = new Scanner(System.in);
 
@@ -237,53 +232,55 @@ public class Menu
 
 			opcao = input.nextInt();
 			input.nextLine();
-
+			
+			//Ver a Lista de Albuns
 			if (opcao == 1)
-			// Ver Lista de Albums
 			{
 				cliente.listaAlbuns(loja);
 			}
+			//Procurar Album por Nome
 			if (opcao == 2)
-			// Procurar Album por nome
 			{
 				System.out.println("Escreva o nome do álbum que pretende procurar:");
 				String nome = input.nextLine();
 
 				cliente.visualizarAlbumNome(loja, nome);
 			}
+			//Procurar Album por Género
 			if (opcao == 3)
-			// Procurar Album por género
 			{
 				System.out.printf("Escreva o género do álbum que pretende procurar:");
 				String genero = input.nextLine();
 
 				cliente.visualizarAlbumGenero(loja, genero);
 			}
+			// Procurar Album por Grupo
 			if (opcao == 4)
-			// Procurar Album por grupo
 			{
 				System.out.printf("Escreva o nome do grupo que pretende procurar:");
 				String grupo = input.nextLine();
 
 				cliente.visualizarAlbumGrupo(loja, grupo);
 			}
+			//Procurar Album por Música
 			if (opcao == 5)
-			// Procurar Album por musica
 			{
 				System.out.println("Introduza uma música do Album que procura:");
 				String musica = input.nextLine();
 
 				cliente.visualizarAlbumMusicas(loja, musica);
 			}
+			//Visualizar Dados de Conta
 			if (opcao == 6)
-			// Visualizar dados de conta
 			{
 				System.out.println(cliente.toString());
 			}
+			//Finalizar a Compra
 			if (opcao == 7)
 			{
 				cliente.finalizarCompra(loja);
 			}
+			//Terminar Sessão
 			if (opcao == 8)
 			{
 				return;
@@ -291,5 +288,4 @@ public class Menu
 			input.close();
 		}
 	}
-
 }
