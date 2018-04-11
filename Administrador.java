@@ -2,39 +2,38 @@ package trabalho2_si;
 
 import java.util.Arrays;
 
-//import java.util.ArrayList;
-
 public class Administrador
 {
 	//Método para adicionar Albums à Loja
 	public void addNewAlbum(Loja loja, Album album)
 	{
 		String nome = album.getNome();
-		int unidades = album.getUnidades();
+		int unidades = album.getUnidadesDisponiveis();
 
 		if (visualizarAlbumNome(loja, nome) != null)
 		{
-			// caso já exista
+			//Caso o Album que se quer adicionar já exista na Loja, só se alteram as unidades
 			System.out.printf("O album que pretende adicionar já existe e foram adicionadas " + unidades + "unidades.");
-			album.setUnidades(album.getUnidades() + unidades);
+			album.setUnidadesDisponiveis(album.getUnidadesDisponiveis() + unidades);
 			loja.atualizaUnidades(album);
 		}
 		else
 		{
-			// Caso não exista, é adicionado à lista de albuns
+			//Caso não exista, é adicionado à lista de albuns
 			loja.adicionaAlbum(album);
+			album.setID(loja.getListaAlbuns().indexOf(album) + 1);
 			System.out.println("Album adicionado com sucesso!");
 		}
-
 	}
 	//Método para alterar o Preço de um Album (com histórico)
-	public void updateAlbumPrice(Loja loja, Album album, int price)
+	public void updateAlbumPrice(Loja loja, Album album, double price)
 	{	
 		//Se o Album existe
 		if (album != null)
 		{
+			album.addHistoricoPreços(album.getPrice());
 			System.out.println("O preço do album foi atualizado com sucesso.");
-			System.out.println("O album que custava " + album.getPrice() + "custa agora " + price);
+			System.out.println("O album que custava " + album.getPrice() + "€ custa agora " + price + " €.");
 			album.setPrice(price);
 		}
 		else
@@ -43,7 +42,6 @@ public class Administrador
 			System.out.println("O album que pretende alterar o preço não existe.");
 		}
 	}
-
 	//Método para Remover um Album da Loja
 	public void eliminaAlbum(Loja loja, Album album, int unidades)
 	{
@@ -52,15 +50,14 @@ public class Administrador
 			if (loja.getListaAlbuns().get(i).equals(album))
 			{
 				//Se as Unidades que se pretende remover são iguais às unidades da Loja o Album é removido complemamente
-				if (album.getUnidades() == unidades)
+				if (album.getUnidadesDisponiveis() == unidades)
 				{
 					loja.removeAlbum(album);
 				}
 				//Se as Unidades que se pretende remover são inferiores às que existem na Loja o Album permanece na Loja mas com um menos Unidades 
-
-				else if (album.getUnidades() > unidades)
+				else if (album.getUnidadesDisponiveis() > unidades)
 				{
-					album.setUnidades(album.getUnidades() - unidades);
+					album.setUnidadesDisponiveis(album.getUnidadesDisponiveis() - unidades);
 					loja.atualizaUnidades(album);
 				}
 				//Se o Album não existe na Loja
@@ -68,7 +65,6 @@ public class Administrador
 				{
 					System.out.println("O album que pretende remover não existe.");
 				}
-
 			}
 		}
 	}
@@ -128,15 +124,18 @@ public class Administrador
 	//Método para pesquisar todos os Albums da Loja
 	public void listaAlbuns(Loja loja)
 	{
-		System.out.printf("Lista dos albuns: \n\n");
+		System.out.println("=================LISTA DE ALBUMS================= \n");
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
 		{
 			System.out.printf(
-					"Album: %s  \nGrupo: %s  \nMusicas: %s  \nPreço: %s  \nGénero: %s \nUnidades em stock: %s \n\n",
+					"Album: %s  \nGrupo: %s  \nMusicas: %s  \nPreço: %s  \nPreços antigo: %s \nGénero: %s \nUnidades em stock: %s  \nUnidades Vendidas: %s \n\n",
 					loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
 					Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
-					loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),
-					loja.getListaAlbuns().get(i).getUnidades());
+					loja.getListaAlbuns().get(i).getPrice(), 
+					loja.getListaAlbuns().get(i).getHistoricoPreços(),
+					loja.getListaAlbuns().get(i).getGenero(),
+					loja.getListaAlbuns().get(i).getUnidadesDisponiveis(),
+					loja.getListaAlbuns().get(i).getUnidadesVendidas());
 		}
 	}
 }

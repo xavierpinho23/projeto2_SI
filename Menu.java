@@ -9,46 +9,57 @@ public class Menu
 		Loja loja = new Loja();		//Inicialiar a Loja
 		
 		//Criação de 2 Arrays com músicas para adicionar aos Albums
-		String musicas1[] = { "Cigaro", "BYOB" };
-		String musicas2[] = { "olaola", "oleole" };
+		String musicas1[] = { "Cigaro", "BYOB"};
+		String musicas2[] = { "ola", "ole"};
 		
-		Album album1 = new Album("Toxicity", "SOAD", musicas1, "Rock", 5, 10); 		//Criação de 1 um Album
-		Album album2 = new Album("Mesmerize", "SOAD", musicas2, "Metal", 4, 9);		//Criação de outro Album
+		Album album1 = new Album("Toxicity", "SOAD", musicas1, "Rock", 5, 20); 		//Criação de 1 um Album
+		Album album2 = new Album("Mesmerize", "SOAD", musicas2, "Metal", 4,30);		//Criação de outro Album
+		album1.setID(1);
+		album2.setID(2);
 		
 		Administrador admin = new Administrador();			//Criação do Administrador
 		Cliente cliente1 = new Cliente("cliente1", "321");	//Criação de um Cliente
 		
-		loja.listaAlbuns.add(album1); 		//Adicionar o album1 à Lista de Albuns
-		loja.listaAlbuns.add(album2); 		//Adicionar o album2 à Lista de Albuns
-		loja.administradores.add(admin);	//Adicionar o Administrador à Lista de Administradores
-		loja.clientes.add(cliente1);		//Adicionar o cliente1 à Lista de Clientes
+		loja.adicionaAlbum(album1); 		//Adicionar o album1 à Lista de Albuns
+		loja.adicionaAlbum(album2); 		//Adicionar o album2 à Lista de Albuns
+		loja.addClientes(cliente1); 		//Adicionar o cliente1 à Lista de Clientes
 
 		int decisao = 0;
 		int escolha = 0;
 		
 		Scanner input = new Scanner(System.in);
-
+		
 		while (decisao != 1 && decisao != 2 && decisao != 3)
 		{
-			System.out.println("Bem Vindo! \n");
+			System.out.println("=================\\BEM-VINDO//================= \n\n");
 			System.out.println("Escolha 1 para Cliente ou 2 para Administrador ou 3 para sair.");
+			
+			while (!input.hasNextInt() && decisao!=1 && decisao!=2 && decisao!=3)
+			{
+				System.out.println("Input não válido.");
+				System.out.println("Escolha 1 para Cliente ou 2 para Administrador.");
+				input.next();
+			}
 			decisao = input.nextInt();
 			input.nextLine();
-			if (decisao != 1 && decisao != 2 && decisao != 3)
-			{
-				System.out.println("Input Inválido.");
-			}
-			
+
 			//Cliente
 			while (decisao == 1)		
 			{
 				System.out.println("Escolha 1 para Registo e 2 para LogIn.");
+				
+				while (!input.hasNextInt() && escolha!=1 && escolha!=2)
+				{
+					System.out.println("Input Inválido.");
+					decisao = 0;
+					System.out.println("Escolha 1 para Registo e 2 para LogIn.");
+					input.next();
+				}
 				escolha = input.nextInt();
 				input.nextLine();
-				
+						
 				//Registo
 				while (escolha == 1)
-				
 				{
 					boolean exists = false;
 					System.out.println("Introduza o username: ");
@@ -57,7 +68,7 @@ public class Menu
 					System.out.println("Introduza o password: ");
 					String password = input.nextLine();
 
-					for (int i = 0; i < loja.getAdministradores().size(); i++)
+					for (int i = 0; i < loja.getClientes().size(); i++)
 					{
 						if (loja.getClientes().get(i).getUsername().equals(username))
 						{
@@ -67,18 +78,20 @@ public class Menu
 					if (exists)
 					{
 						System.out.println("O username já foi escolhido.");
+						decisao = 0;
 					}
 					else
 					{
 						Cliente cliente = new Cliente(username, password);
 						loja.addClientes(cliente);
 
-						System.out.println("Registo bem sucedido");
+						System.out.println("Registo bem sucedido.");
 						LogInCliente(loja, cliente);	
 						decisao = 0; 	//Faz com que volte ao Menu Inicial
 						escolha = 0;
 					}
 				}
+				boolean existe = false;
 				//LogIn
 				while (escolha == 2)
 				{
@@ -92,14 +105,23 @@ public class Menu
 					{
 						if (loja.getClientes().get(i).getUsername().equals(username) && loja.getClientes().get(i).getPassword().equals(password))
 						{
-							System.out.println("Bem vindo cliente: " + username);
+							existe = true;
 							Cliente cliente = loja.getClientes().get(i);
 							LogInCliente(loja, cliente); //Envia para o Menu do Cliente
+							decisao = 0;
+							escolha = 0;
+							break;
 						}
 						else
 						{
-							System.out.println("O username/password que introduziu estão errados.");
+							existe = false;							
 						}
+					}
+					if (!existe)
+					{
+						System.out.println("O username/password que introduziu estão errados.");
+						decisao = 0;
+						escolha = 0;
 					}
 				}
 			}
@@ -108,10 +130,9 @@ public class Menu
 			{
 				LogInAdministrador(loja, admin); //Envia para o Menu do Administrador
 				decisao = 0; 					 //Faz com que volte ao Menu Inicial
-
 			}
 		}
-		input.close();
+		//input.close();
 	}
 	//Menu do Administrador
 	public static void LogInAdministrador(Loja loja, Administrador admin)
@@ -119,11 +140,11 @@ public class Menu
 		int opcao = 0;
 		Scanner input = new Scanner(System.in);
 
-		System.out.println("Bem Vindo à Vinyl Records Lda. Administrador! \n");
+		System.out.println("Bem Vindo à Vinyl Records Lda. Administrador! \n\n");
 
 		while (opcao != 6)
 		{
-			System.out.printf("Escolha uma das seguintes opções: \n");
+			System.out.printf("Escolha uma das seguintes opções: \n\n");
 			System.out.printf("[1] -> Adicionar um Album \n");
 			System.out.printf("[2] -> Remover um Album \n");
 			System.out.printf("[3] -> Ver a lista de Albuns \n");
@@ -165,10 +186,10 @@ public class Menu
 			//Remover um Album
 			if (opcao == 2)
 			{
-				System.out.printf("Introduza o Album que quer remover. \n");
+				System.out.printf("Introduza o Album que quer remover.");
 				System.out.printf("Nome: ");
 				String nome = input.nextLine();
-				System.out.printf("Quantidade de unidades que deseja remover? \n");
+				System.out.printf("Quantidade de unidades que deseja remover?");
 				int unidades = input.nextInt();
 				input.nextLine();
 
@@ -195,19 +216,18 @@ public class Menu
 			//Estatísticas
 			if (opcao == 5)
 			{
-				System.out.println("Estatísticas: \n");
-				System.out.println("Total de dinheiro gasto na loja: " + loja.dinheiroGastoTotal() + "€.\n");
-				System.out.println("Número total de discos em stock: " + loja.albunsStock() + ". \n");
-				loja.albunsStockGenero();
-				loja.dinheiroGastoGenero();
-
+				System.out.println("=================\\Estatísticas//================= \n");
+				System.out.println("Total de dinheiro gasto na loja: " + loja.dinheiroGastoTotal() + " €.");
+				System.out.println("Número total de discos em stock: " + loja.albunsStock() + ".");
+				System.out.println(loja.albunsStockGenero());
+				System.out.println(loja.dinheiroGastoGenero());
 			}
 			//Terminar Sessão
 			if (opcao == 6)
 			{
 				return;
 			}
-			input.close();
+			//input.close();
 		}
 	}
 	//Menu do Cliente
@@ -216,11 +236,11 @@ public class Menu
 		int opcao = 0;
 		Scanner input = new Scanner(System.in);
 
-		System.out.printf("Bem Vindo à Vinyl Records Lda. cliente %s ! \n", cliente.getUsername());
+		System.out.printf("Bem Vindo à Vinyl Records Lda. cliente %s ! \n\n", cliente.getUsername());
 
 		while (opcao != 8)
 		{
-			System.out.printf("Escolha uma das seguintes opções: \n");
+			System.out.printf("Escolha uma das seguintes opções: \n\n");
 			System.out.printf("[1] -> Ver Lista de Albums \n");
 			System.out.printf("[2] -> Procurar Album por nome \n");
 			System.out.printf("[3] -> Procurar Album por género \n");
@@ -283,9 +303,10 @@ public class Menu
 			//Terminar Sessão
 			if (opcao == 8)
 			{
+				cliente.getCarrinho().clear();
 				return;
 			}
-			input.close();
+			//input.close();
 		}
 	}
 }
