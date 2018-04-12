@@ -106,6 +106,44 @@ public class Cliente
 			}
 		}
 	}
+	//Método para retirar Albums ao Carrinho
+		public void retiraAlbum(Loja loja, String nome, int unidades)
+		{
+			boolean existe = false;
+			
+			if (getCarrinho().isEmpty())
+			{
+				System.out.println("O Carrinho encontra-se vazio.");
+				return;
+			}
+			for (int i = 0; i < getCarrinho().size(); i++)
+			{
+			    if (getCarrinho().get(i).getNome().toLowerCase().equals(nome))
+				{
+			    	existe = true;
+					if (getCarrinho().get(i).getUnidadesCarrinho() > unidades)
+					{
+						getCarrinho().get(i).setUnidadesCarrinho(getCarrinho().get(i).getUnidadesCarrinho() - unidades);
+						System.out.println("Foram removidas " + unidades + " do Album " + getCarrinho().get(i).getNome() + " ao carrinho.");
+					}
+					else if (getCarrinho().get(i).getUnidadesCarrinho() == unidades)
+					{
+						removeCarrinho(getCarrinho().get(i));
+						System.out.println("O Album foi removido do carrinho com sucesso.");
+					}
+					else
+					{
+						System.out.println("Não é possível remover o Album ao carrinho porque não existem unidades suficientes.");
+					}
+					return;
+				}
+				
+			}
+			if (existe == false)
+			{
+				System.out.println("O Album não existe no Carrinho.");
+			}
+		}
 	//Método para efetuar a compra que já se encontrava no Carrinho do Cliente
 	public void finalizarCompra(Loja loja)
 	{
@@ -115,6 +153,7 @@ public class Cliente
 			System.out.println("Não existe nada no carrinho.");
 			return;
 		}
+		this.divida = 0; //para levar a divida a zero antes de cada compra
 		//Se o Carrinho não estiver vazio
 		for (int i = 0; i < carrinho.size(); i++)
 		{
@@ -136,6 +175,7 @@ public class Cliente
 						}
 						else
 						{
+							System.out.println("Compra efetuada com sucesso!\n");
 							loja.getListaAlbuns().get(i).setUnidadesDisponiveis(loja.getListaAlbuns().get(i).getUnidadesDisponiveis() - getCarrinho().get(j).getUnidadesCarrinho()); //Retirar as Unidades do Carrinho às Unidades Disponíveis
 							getCarrinho().get(j).setUnidadesVendidas(getCarrinho().get(j).getUnidadesCarrinho());  	//As Unidades Vendidas passam a ser as que estavam no Carrinho
 							getCarrinho().get(j).setUnidadesCarrinho(0);                 //Limpar carrinho
@@ -154,13 +194,17 @@ public class Cliente
 				}
 			}
 		}
+		else
+		{
+			System.out.println("Não tem saldo suficiente para concretizar a compra.\n");
+		}
 	}
 	//Método para pesquisar Album por Nome na Loja
 	public void visualizarAlbumNome(Loja loja, String nome)
 	{
 		boolean existe = false;
 
-		System.out.printf("=================LISTA DE ALBUMS================= \n\n");
+		System.out.printf("===================LISTA DE ALBUMS=================== \n\n");
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
 		{
 			if (loja.getListaAlbuns().get(i).getNome().toLowerCase().equals(nome.toLowerCase()))
@@ -185,28 +229,65 @@ public class Cliente
 		{
 			System.out.println("Não existe nenhum Album com esse nome. \n");
 		}
-		if (existe == true)
+		while (existe == true)
 		{
 			System.out.println("Deseja comprar algum Álbum?");
 			System.out.println("[1] -> Sim");
 			System.out.println("[2] -> Não");
-
+			while (!input.hasNextInt() )
+			{
+				System.out.println("Input não válido.\n");
+				System.out.println("Deseja comprar algum Álbum?");
+				System.out.println("[1] -> Sim");
+				System.out.println("[2] -> Não");
+				input.next();
+			}
 			int opcao = input.nextInt();
 			input.nextLine();
+			
+			while( opcao!=1 && opcao!=2 )
+			{
+				System.out.println("Input não válido. \n");
+				break;
+			}
 
 			if (opcao == 1)
 			{
 				System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+					input.next();
+				}
 				int ID = input.nextInt();
 				input.nextLine();
 
 				System.out.println("Indique o numero de unidades que deseja comprar:");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Indique o numero de unidades que deseja comprar:");
+					input.next();
+				}
 				int unidades = input.nextInt();
+				
 				input.nextLine();
+				//Se o ID existir 
+				if (ID <= loja.getListaAlbuns().size())
+				{
+					Album album = loja.getListaAlbuns().get(ID - 1);
+					adicionaAlbum(loja, album, unidades);
+				}
+				else
+				{
+					System.out.println("O ID que introduziu não existe. \n");
+				}
 
-				Album album = loja.getListaAlbuns().get(ID - 1);
-				adicionaAlbum(loja, album, unidades);
-
+			}
+			if (opcao == 2)
+			{
+				return;
 			}
 
 		}
@@ -216,7 +297,7 @@ public class Cliente
 	{
 		boolean existe = false;
 
-		System.out.printf("=================LISTA DE ALBUMS================= \n");
+		System.out.printf("===================LISTA DE ALBUMS=================== \n");
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
 		{
 			if (loja.getListaAlbuns().get(i).getGrupo().toLowerCase().equals(grupo.toLowerCase()))
@@ -242,26 +323,62 @@ public class Cliente
 		{
 			System.out.println("Não existe nenhum Album desse grupo.\n");
 		}
-		if (existe == true)
+		while (existe == true)
 		{
 			System.out.println("Deseja comprar algum Álbum?");
 			System.out.println("[1] -> Sim");
-			System.out.println("[2] -> Não");		
+			System.out.println("[2] -> Não");
+			while (!input.hasNextInt() )
+			{
+				System.out.println("Input não válido.\n");
+				System.out.println("Deseja comprar algum Álbum?");
+				System.out.println("[1] -> Sim");
+				System.out.println("[2] -> Não");
+				input.next();
+			}
 			int opcao = input.nextInt();
 			input.nextLine();
+			while( opcao!=1 && opcao!=2 )
+			{
+				System.out.println("Input não válido. \n");
+				break;
+			}
 
 			if (opcao == 1)
 			{
 				System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+					input.next();
+				}
 				int ID = input.nextInt();
 				input.nextLine();
 
 				System.out.println("Indique o numero de unidades que deseja comprar:");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Indique o numero de unidades que deseja comprar:");
+					input.next();
+				}
 				int unidades = input.nextInt();
 				input.nextLine();
-
-				Album album = loja.getListaAlbuns().get(ID - 1);
-				adicionaAlbum(loja, album, unidades);
+				if (ID <= loja.getListaAlbuns().size())
+				{
+					Album album = loja.getListaAlbuns().get(ID - 1);
+					adicionaAlbum(loja, album, unidades);
+				}
+				
+				else
+				{
+					System.out.println("O ID que introduziu não existe. \n");
+				}
+			}
+			if (opcao == 2)
+			{
+				return;
 			}
 		}
 	}
@@ -269,7 +386,7 @@ public class Cliente
 	public void visualizarAlbumMusicas(Loja loja, String musica)
 	{
 		boolean existe = false;
-		System.out.println("=================LISTA DE ALBUMS================= \n");
+		System.out.println("===================LISTA DE ALBUMS=================== \n");
 
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
 		{
@@ -299,26 +416,63 @@ public class Cliente
 		{
 			System.out.println("Não existe a música que procura.\n");
 		}
-		if (existe == true)
+		while (existe == true)
 		{
 			System.out.println("Deseja comprar algum Álbum?");
 			System.out.println("[1] -> Sim");
 			System.out.println("[2] -> Não");
+			while (!input.hasNextInt() )
+			{
+				System.out.println("Input não válido.\n");
+				System.out.println("Deseja comprar algum Álbum?");
+				System.out.println("[1] -> Sim");
+				System.out.println("[2] -> Não");
+				input.next();
+			}
 			int opcao = input.nextInt();
 			input.nextLine();
+			while( opcao!=1 && opcao!=2 )
+			{
+				System.out.println("Input não válido. \n");
+				break;
+			}
 
 			if (opcao == 1)
 			{
 				System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+					input.next();
+				}
 				int ID = input.nextInt();
 				input.nextLine();
 
 				System.out.println("Indique o numero de unidades que deseja comprar:");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Indique o numero de unidades que deseja comprar:");
+					input.next();
+				}
 				int unidades = input.nextInt();
 				input.nextLine();
 
-				Album album = loja.getListaAlbuns().get(ID - 1);
-				adicionaAlbum(loja, album, unidades);
+				if (ID <= loja.getListaAlbuns().size())
+				{
+					Album album = loja.getListaAlbuns().get(ID - 1);
+					adicionaAlbum(loja, album, unidades);
+				}
+				
+				else
+				{
+					System.out.println("O ID que introduziu não existe. \n");
+				}
+			}
+			if (opcao == 2)
+			{
+				return;
 			}
 		}
 	}
@@ -327,7 +481,7 @@ public class Cliente
 	{
 		boolean existe = false;
 
-		System.out.println("=================LISTA DE ALBUMS================= \n");
+		System.out.println("===================LISTA DE ALBUMS=================== \n");
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
 		{
 			if (loja.getListaAlbuns().get(i).getGenero().toLowerCase().equals(genero.toLowerCase()))
@@ -352,34 +506,71 @@ public class Cliente
 		{
 			System.out.println("Não existe nenhum Album do género que procura.\n");
 		}
-		if (existe == true)
+		while (existe == true)
 		{
 			System.out.println("Deseja comprar algum Álbum?");
 			System.out.println("[1] -> Sim");
 			System.out.println("[2] -> Não");
+			while (!input.hasNextInt() )
+			{
+				System.out.println("Input não válido.\n");
+				System.out.println("Deseja comprar algum Álbum?");
+				System.out.println("[1] -> Sim");
+				System.out.println("[2] -> Não");
+				input.next();
+			}
 			
 			int opcao = input.nextInt();
 			input.nextLine();
+			while( opcao!=1 && opcao!=2 )
+			{
+				System.out.println("Input não válido. \n");
+				break;
+			}
 
 			if (opcao == 1)
 			{
 				System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+					input.next();
+				}
 				int ID = input.nextInt();
 				input.nextLine();
 
 				System.out.println("Indique o numero de unidades que deseja comprar:");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Indique o numero de unidades que deseja comprar:");
+					input.next();
+				}
 				int unidades = input.nextInt();
 				input.nextLine();
 
-				Album album = loja.getListaAlbuns().get(ID - 1);
-				adicionaAlbum(loja, album, unidades);
+				if (ID <= loja.getListaAlbuns().size())
+				{
+					Album album = loja.getListaAlbuns().get(ID - 1);
+					adicionaAlbum(loja, album, unidades);
+				}
+				
+				else
+				{
+					System.out.println("O ID que introduziu não existe. \n");
+				}
+			}
+			if (opcao == 2)
+			{
+				return;
 			}
 		}
 	}
 	//Método para ver a Lista de todos os Albuns da Loja
 	public void listaAlbuns(Loja loja)
 	{
-		System.out.println("=================LISTA DE ALBUMS================= \n");
+		System.out.println("===================LISTA DE ALBUMS=================== \n");
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
 		{
 			System.out.printf(
@@ -399,22 +590,59 @@ public class Cliente
 		System.out.println("Deseja comprar algum Álbum?");
 		System.out.println("[1] -> Sim");
 		System.out.println("[2] -> Não");
+		while (!input.hasNextInt() )
+		{
+			System.out.println("Input não válido.\n");
+			System.out.println("Deseja comprar algum Álbum?");
+			System.out.println("[1] -> Sim");
+			System.out.println("[2] -> Não");
+			input.next();
+		}
 		
 		int opcao = input.nextInt();
 		input.nextLine();
+		while( opcao!=1 && opcao!=2 )
+		{
+			System.out.println("Input não válido. \n");
+			break;
+		}
 
 		if (opcao == 1)
 		{
 			System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+			while (!input.hasNextInt() )
+			{
+				System.out.println("Input não válido.\n");
+				System.out.println("Indique o ID do Album que pretende adicionar ao carrinho.");
+				input.next();
+			}
 			int ID = input.nextInt();
 			input.nextLine();
 
 			System.out.println("Indique o numero de unidades que deseja comprar:");
+			while (!input.hasNextInt() )
+			{
+				System.out.println("Input não válido.\n");
+				System.out.println("Indique o numero de unidades que deseja comprar:");
+				input.next();
+			}
 			int unidades = input.nextInt();
 			input.nextLine();
 
-			Album album = loja.getListaAlbuns().get(ID - 1);
-			adicionaAlbum(loja, album, unidades);
+			if (ID <= loja.getListaAlbuns().size())
+			{
+				Album album = loja.getListaAlbuns().get(ID - 1);
+				adicionaAlbum(loja, album, unidades);
+			}
+			
+			else
+			{
+				System.out.println("O ID que introduziu não existe. \n");
+			}
+		}
+		if (opcao == 2)
+		{
+			return;
 		}
 	}
 	//Método para a Apresentação do Carrinho
@@ -424,13 +652,13 @@ public class Cliente
 
 		for (int i = 0; i < getCarrinho().size(); i++)
 		{
-			carrinho[i] = "Album: " + getCarrinho().get(i).getNome() + "\n" + 
-					"Grupo: "+ getCarrinho().get(i).getGrupo() + "\n" + 
-					"Musicas: " + Arrays.toString(getCarrinho().get(i).getMusicas()) + "\n" + 
-					"Preço: " + Double.toString(getCarrinho().get(i).getPrice()) + "€\n" + 
-					"Género: " + getCarrinho().get(i).getGenero() + "\n" + 
-					"Unidades no carrinho: " + Integer.toString(getCarrinho().get(i).getUnidadesCarrinho()) + "\n" +
-					"ID: " + getCarrinho().get(i).getID();
+			carrinho[i] = "\nAlbum:                " + getCarrinho().get(i).getNome() + "\n" + 
+						  "Grupo:                " + getCarrinho().get(i).getGrupo() + "\n" + 
+					      "Musicas:              " + Arrays.toString(getCarrinho().get(i).getMusicas()) + "\n" + 
+					      "Preço:                " + Double.toString(getCarrinho().get(i).getPrice()) + "€\n" + 
+					      "Género:               " + getCarrinho().get(i).getGenero() + "\n" + 
+					      "Unidades no carrinho: " + Integer.toString(getCarrinho().get(i).getUnidadesCarrinho()) + "\n" +
+					      "ID:                   " + getCarrinho().get(i).getID() + "\n";
 		}
 		return Arrays.toString(carrinho);
 	}
@@ -441,24 +669,26 @@ public class Cliente
 
 		for (int i = 0; i < getLista_albuns_cliente().size(); i++)
 		{
-			carrinhoHistorico[i] = "Album: " + getLista_albuns_cliente().get(i).getNome() + "\n" + 
-					"Grupo: " + getLista_albuns_cliente().get(i).getGrupo() + "\n" + 
-					"Musicas: " + Arrays.toString(getLista_albuns_cliente().get(i).getMusicas()) + "\n" +
-					"Preço: " + Double.toString(getLista_albuns_cliente().get(i).getPrice()) + "€\n" +
-					"Género: " + getLista_albuns_cliente().get(i).getGenero() + "\n" +
-					"Unidades compradas: " + Integer.toString(getLista_albuns_cliente().get(i).getUnidadesVendidas()) + "\n" +
-					"ID: " + getLista_albuns_cliente().get(i).getID();
+			carrinhoHistorico[i] = "\nAlbum:                 " + getLista_albuns_cliente().get(i).getNome() + "\n" + 
+									"Grupo:                  " + getLista_albuns_cliente().get(i).getGrupo() + "\n" + 
+									"Musicas:                " + Arrays.toString(getLista_albuns_cliente().get(i).getMusicas()) + "\n" +
+									"Preço:                  " + Double.toString(getLista_albuns_cliente().get(i).getPrice()) + "€\n" +
+									"Género:                 " + getLista_albuns_cliente().get(i).getGenero() + "\n" +
+									"Unidades compradas:     " + Integer.toString(getLista_albuns_cliente().get(i).getUnidadesVendidas()) + "\n" +
+									"ID:                     " + getLista_albuns_cliente().get(i).getID() + "\n";
 		}
 		return Arrays.toString(carrinhoHistorico);
 	}
 	//Método para a Apresentação do Cliente
 	public String toString()
 	{
-		return "=================DADOS DE CONTA================= \n\n" +
+		return "===================DADOS DE CONTA=================== \n\n" +
 			   "Username:            " + getUsername()     + "\n" + 
 			   "Password:            " + getPassword()     + "\n" + 
 			   "Saldo:               " + getSaldo()        + "€\n" +
-			   "Carrinho:            " + carrinhoAspeto()  + "\n" + 
-			   "Histórico de compras:" + historicoAspeto() + "\n";
+			   "===================Carrinho========================= \n" + 
+			   carrinhoAspeto()  + "\n" + 
+			   "===================Histórico de compras============= \n" + 
+			   historicoAspeto() + "\n";
 	}
 }

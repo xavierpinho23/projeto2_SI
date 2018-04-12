@@ -6,7 +6,7 @@ public class Menu
 {
 	public static void main(String[] args)
 	{
-		Loja loja = new Loja();		//Inicialiar a Loja
+		Loja loja = new Loja();		//Inicializar a Loja
 		
 		//Criação de 2 Arrays com músicas para adicionar aos Albums
 		String musicas1[] = { "Cigaro", "BYOB"};
@@ -29,20 +29,26 @@ public class Menu
 		
 		Scanner input = new Scanner(System.in);
 		
+		System.out.println("=========================\\BEM-VINDO//========================= \n\n");
+		
 		while (decisao != 1 && decisao != 2 && decisao != 3)
 		{
-			System.out.println("=================\\BEM-VINDO//================= \n\n");
 			System.out.println("Escolha 1 para Cliente ou 2 para Administrador ou 3 para sair.");
 			
-			while (!input.hasNextInt() && decisao!=1 && decisao!=2 && decisao!=3)
+			while (!input.hasNextInt() )
 			{
-				System.out.println("Input não válido.");
-				System.out.println("Escolha 1 para Cliente ou 2 para Administrador.");
+				System.out.println("Input não válido.\n");
+				System.out.println("Escolha 1 para Cliente ou 2 para Administrador ou 3 para sair.");
 				input.next();
 			}
 			decisao = input.nextInt();
 			input.nextLine();
-
+			
+			while( (decisao!=1 && decisao!=2 && decisao!=3))
+			{
+				System.out.println("Input não válido. \n");
+				break;
+			}
 			//Cliente
 			while (decisao == 1)		
 			{
@@ -176,8 +182,16 @@ public class Menu
 				System.out.printf("Grupo: ");
 				String grupo = input.nextLine();
 				System.out.printf("\nQuantas músicas tem o album?: \n");
-				int tamanho = input.nextInt();
-				input.nextLine();
+				
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Quantas músicas tem o album?: \n");
+					input.next();
+				}
+				String Tamanho = input.nextLine();
+				int tamanho = Integer.parseInt(Tamanho);
+				
 				String[] musicas = new String[tamanho];
 				for (int i = 0; i < tamanho; i++)
 				{
@@ -187,8 +201,20 @@ public class Menu
 				System.out.printf("Genero: \n");
 				String genero = input.nextLine();
 				System.out.printf("Preço: \n");
-				int price = input.nextInt();
+				while (!input.hasNextDouble() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Preço: \n");
+					input.next();
+				}
+				double price = input.nextInt();
 				System.out.printf("Unidades: \n");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Unidades: \n");
+					input.next();
+				}
 				int unidades = input.nextInt();
 
 				Album album = new Album(nome, grupo, musicas, genero, price, unidades);
@@ -202,8 +228,14 @@ public class Menu
 				System.out.printf("Nome: ");
 				String nome = input.nextLine();
 				System.out.printf("Quantidade de unidades que deseja remover?");
-				int unidades = input.nextInt();
-				input.nextLine();
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Quantidade de unidades que deseja remover? \n");
+					input.next();
+				}
+				String Unidades = input.nextLine();
+				int unidades = Integer.parseInt(Unidades);
 
 				Album album = admin.visualizarAlbumNome(loja, nome);
 
@@ -220,7 +252,15 @@ public class Menu
 				System.out.println("Qual o nome do album que pretende alterar o preço?");
 				String nome = input.nextLine();
 				System.out.println("Que preço deverá custar?");
-				int price = input.nextInt();
+				while (!input.hasNextDouble() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Preço: \n");
+					input.next();
+				}				
+				
+				String Price = input.nextLine();
+				double price = Integer.parseInt(Price);
 
 				Album album = admin.visualizarAlbumNome(loja, nome);
 				admin.updateAlbumPrice(loja, album, price);
@@ -251,7 +291,7 @@ public class Menu
 
 		System.out.printf("Bem Vindo à Vinyl Records Lda. cliente %s ! \n\n", cliente.getUsername());
 
-		while (opcao != 8)
+		while (opcao != 9)
 		{
 			System.out.printf("Escolha uma das seguintes opções: \n\n");
 			System.out.printf("[1] -> Ver Lista de Albums \n");
@@ -260,8 +300,9 @@ public class Menu
 			System.out.printf("[4] -> Procurar Album por grupo \n");
 			System.out.printf("[5] -> Procurar Album por música \n");
 			System.out.printf("[6] -> Ver dados da conta \n");
-			System.out.printf("[7] -> Finalizar compra \n");
-			System.out.printf("[8] -> Terminar sessão \n");
+			System.out.printf("[7] -> Remover Albums do carrinho \n");
+			System.out.printf("[8] -> Finalizar compra \n");
+			System.out.printf("[9] -> Terminar sessão \n");
 
 			while(!input.hasNextInt())
 			{
@@ -274,8 +315,9 @@ public class Menu
 				System.out.printf("[4] -> Procurar Album por grupo \n");
 				System.out.printf("[5] -> Procurar Album por música \n");
 				System.out.printf("[6] -> Ver dados da conta \n");
-				System.out.printf("[7] -> Finalizar compra \n");
-				System.out.printf("[8] -> Terminar sessão \n");
+				System.out.printf("[7] -> Remover Albums do carrinho \n");
+				System.out.printf("[8] -> Finalizar compra \n");
+				System.out.printf("[9] -> Terminar sessão \n");
 			}
 			opcao = input.nextInt();
 			input.nextLine();
@@ -323,13 +365,31 @@ public class Menu
 			{
 				System.out.println(cliente.toString());
 			}
-			//Finalizar a Compra
 			if (opcao == 7)
+			{
+				System.out.printf("Introduza o Nome do Album que quer remover.");
+				System.out.printf("Nome: ");
+				String nome = input.nextLine();
+				nome = nome.toLowerCase();
+				System.out.printf("Quantidade de unidades que deseja remover?");
+				while (!input.hasNextInt() )
+				{
+					System.out.println("Input não válido.\n");
+					System.out.println("Quantidade de unidades que deseja remover? \n");
+					input.next();
+				}
+				String Unidades = input.nextLine();
+				int unidades =  Integer.parseInt(Unidades); //converter string para inteiro
+				
+				cliente.retiraAlbum(loja, nome, unidades);
+			}
+			//Finalizar a Compra
+			if (opcao == 8)
 			{
 				cliente.finalizarCompra(loja);
 			}
 			//Terminar Sessão
-			if (opcao == 8)
+			if (opcao == 9)
 			{
 				cliente.getCarrinho().clear();
 				return;

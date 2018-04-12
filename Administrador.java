@@ -80,51 +80,10 @@ public class Administrador
 		}
 		return null;
 	}
-	//Método para pesquisar Album por Grupo na Loja
-	public Album visualizarAlbumGrupo(Loja loja, String grupo)
-	{
-		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
-		{
-			// acrescentei o LowerCase() para as comparações
-			if (loja.getListaAlbuns().get(i).getGrupo().toLowerCase().equals(grupo.toLowerCase()))
-			{
-				return loja.getListaAlbuns().get(i);
-			}
-		}
-		return null;
-	}
-	//Método para pesquisar Album por Música na Loja
-	public Album visualizarAlbumMusicas(Loja loja, String musica)
-	{
-		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
-		{
-			String[] musicas = loja.getListaAlbuns().get(i).getMusicas();
-			for (int j = 0; j < loja.getListaAlbuns().size(); j++)
-			{
-				if (musicas[j].toLowerCase().equals(musica.toLowerCase()))
-				{
-					return loja.getListaAlbuns().get(i);
-				}
-			}
-		}
-		return null;
-	}
-	//Método para pesquisar Album por Género na Loja
-	public Album visualizarAlbumGenero(Loja loja, String genero)
-	{
-		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
-		{
-			if (loja.getListaAlbuns().get(i).getGenero().toLowerCase().equals(genero.toLowerCase()))
-			{
-				return loja.getListaAlbuns().get(i);
-			}
-		}
-		return null;
-	}
 	//Método para pesquisar todos os Albums da Loja
 	public void listaAlbuns(Loja loja)
 	{
-		System.out.println("=================LISTA DE ALBUMS================= \n");
+		System.out.println("===================LISTA DE ALBUMS=================== \n");
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
 		{
 			System.out.printf(
