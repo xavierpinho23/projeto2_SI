@@ -33,7 +33,7 @@ public class Administrador
 		{
 			album.addHistoricoPreços(album.getPrice());
 			System.out.println("O preço do album foi atualizado com sucesso.");
-			System.out.println("O album que custava " + album.getPrice() + "€ custa agora " + price + " €.");
+			System.out.println("O Album que custava " + album.getPrice() + "€ custa agora " + price + "€.");
 			album.setPrice(price);
 		}
 		else
@@ -60,10 +60,10 @@ public class Administrador
 					album.setUnidadesDisponiveis(album.getUnidadesDisponiveis() - unidades);
 					loja.atualizaUnidades(album);
 				}
-				//Se o Album não existe na Loja
+				//Se o não existem Unidades suficientes
 				else
 				{
-					System.out.println("O album que pretende remover não existe.");
+					System.out.println("Não existem unidades suficientes para serem removidas.");
 				}
 			}
 		}

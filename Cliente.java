@@ -86,7 +86,7 @@ public class Cliente
 	{
 		this.saldo = saldo;
 	}
-	// adiciona albuns ao carrinho
+	//Método para adicionar Albums ao Carrinho
 	public void adicionaAlbum(Loja loja, Album album, int unidades)
 	{
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
@@ -166,18 +166,24 @@ public class Cliente
 			if (loja.getListaAlbuns().get(i).getNome().toLowerCase().equals(nome.toLowerCase()))
 			{
 				System.out.printf(
-						"Album: %s  \nGrupo: %s  \nMusicas: %s  \nPreço: %s€ \nGénero: %s \nUnidades em stock: %s \nID: %s \n",
+						"Album:             %s  " +
+					    "\nGrupo:             %s  " + 
+						"\nMusicas:           %s  " + 
+					    "\nPreço:             %s€ " + 
+						"\nGénero:            %s "  + 
+					    "\nUnidades em stock: %s "  + 
+						"\nID:                %s \n\n",
 						loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
 						Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
 						loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),
-						loja.getListaAlbuns().get(i).getUnidadesDisponiveis(), 
+						loja.getListaAlbuns().get(i).getUnidadesDisponiveis(),
 						loja.getListaAlbuns().get(i).getID());
 				existe = true;
 			}
 		}
 		if (existe == false)
 		{
-			System.out.println("Não existe nenhum Album com esse nome");
+			System.out.println("Não existe nenhum Album com esse nome. \n");
 		}
 		if (existe == true)
 		{
@@ -216,18 +222,25 @@ public class Cliente
 			if (loja.getListaAlbuns().get(i).getGrupo().toLowerCase().equals(grupo.toLowerCase()))
 			{
 				System.out.printf(
-						"Album: %s  \nGrupo: %s  \nMusicas: %s  \nPreço: %s€ \nGénero: %s \nUnidades em stock: %s \nID: %s \n",
-						loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
-						Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
-						loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),
-						loja.getListaAlbuns().get(i).getUnidadesDisponiveis(),
-						loja.getListaAlbuns().get(i).getID());
+						"Album:             %s  "   +
+						"\nGrupo:             %s  " + 
+						"\nMusicas:           %s  " + 
+						"\nPreço:             %s€ " + 
+						"\nGénero:            %s "  + 
+						"\nUnidades em stock: %s "  + 
+						"\nID:                %s \n\n",
+								loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
+								Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
+								loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),
+								loja.getListaAlbuns().get(i).getUnidadesDisponiveis(),
+								loja.getListaAlbuns().get(i).getID());
+						
 				existe = true;
 			}
 		}
 		if (existe == false)
 		{
-			System.out.println("Não existe nenhum Album desse grupo.");
+			System.out.println("Não existe nenhum Album desse grupo.\n");
 		}
 		if (existe == true)
 		{
@@ -266,19 +279,25 @@ public class Cliente
 				if (musicas[j].toLowerCase().equals(musica.toLowerCase()))
 				{
 					System.out.printf(
-							"Album: %s  \nGrupo: %s  \nMusicas: %s  \nPreço: %s€ \nGénero: %s \nUnidades em stock: %s \nID: %s \n",
-							loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
-							Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
-							loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),
-							loja.getListaAlbuns().get(i).getUnidadesDisponiveis(),
-							loja.getListaAlbuns().get(i).getID());
+							"Album:             %s  "   +
+							"\nGrupo:             %s  " + 
+							"\nMusicas:           %s  " + 
+							"\nPreço:             %s€ " + 
+							"\nGénero:            %s "  + 
+							"\nUnidades em stock: %s "  + 
+							"\nID:                %s \n\n",
+									loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
+									Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
+									loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),
+									loja.getListaAlbuns().get(i).getUnidadesDisponiveis(),
+									loja.getListaAlbuns().get(i).getID());
 					existe = true;
 				}
 			}
 		}
 		if (existe == false)
 		{
-			System.out.println("Não existe a música que procura.");
+			System.out.println("Não existe a música que procura.\n");
 		}
 		if (existe == true)
 		{
@@ -314,20 +333,26 @@ public class Cliente
 			if (loja.getListaAlbuns().get(i).getGenero().toLowerCase().equals(genero.toLowerCase()))
 			{
 				System.out.printf(
-						"Album: %s  \nGrupo: %s  \nMusicas: %s  \nPreço: %s€ \nGénero: %s \nUnidades em stock: %s \nID: %s \n",
-						loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
-						Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
-						loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),
-						loja.getListaAlbuns().get(i).getUnidadesDisponiveis(),
-						loja.getListaAlbuns().get(i).getID());
+						"Album:             %s  "   +
+					    "\nGrupo:             %s  " + 
+					    "\nMusicas:           %s  " + 
+					    "\nPreço:             %s€ " + 
+						"\nGénero:            %s "  + 
+						"\nUnidades em stock: %s "  + 
+						"\nID:                %s \n\n",
+								loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
+								Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
+								loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),
+								loja.getListaAlbuns().get(i).getUnidadesDisponiveis(),
+								loja.getListaAlbuns().get(i).getID());
 				existe = true;
 			}
-			else
-			{
-				System.out.println("Não existe nenhum Album do género que procura.");
-			}
 		}
-		if (existe)
+		if (existe == false)
+		{
+			System.out.println("Não existe nenhum Album do género que procura.\n");
+		}
+		if (existe == true)
 		{
 			System.out.println("Deseja comprar algum Álbum?");
 			System.out.println("[1] -> Sim");
@@ -358,7 +383,13 @@ public class Cliente
 		for (int i = 0; i < loja.getListaAlbuns().size(); i++)
 		{
 			System.out.printf(
-					"Album: %s  \nGrupo: %s  \nMusicas: %s  \nPreço: %s€ \nGénero: %s \nUnidades em stock: %s \nID: %s \n",
+					"Album:             %s  " +
+				    "\nGrupo:             %s  " + 
+					"\nMusicas:           %s  " + 
+				    "\nPreço:             %s€ " + 
+					"\nGénero:            %s "  + 
+				    "\nUnidades em stock: %s "  + 
+					"\nID:                %s \n\n",
 					loja.getListaAlbuns().get(i).getNome(), loja.getListaAlbuns().get(i).getGrupo(),
 					Arrays.toString(loja.getListaAlbuns().get(i).getMusicas()),
 					loja.getListaAlbuns().get(i).getPrice(), loja.getListaAlbuns().get(i).getGenero(),

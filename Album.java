@@ -25,6 +25,7 @@ public class Album
 		this.genero = genero;
 		this.unidadesDisponiveis = unidadesDisponiveis;
 	}
+	//Método para aceder ao ID do Album
 	public int getID()
 	{
 		return ID;
@@ -33,6 +34,7 @@ public class Album
 	{
 		ID = iD;
 	}
+	//Método para aceder à Unidades Vendidas de cada Album
 	public int getUnidadesVendidas()
 	{
 		return unidadesVendidas;
@@ -41,6 +43,7 @@ public class Album
 	{
 		this.unidadesVendidas = unidadesVendidas;
 	}
+	//Método para aceder às Unidades no Carrinho de cada Album
 	public int getUnidadesCarrinho()
 	{
 		return unidadesCarrinho;
@@ -49,6 +52,7 @@ public class Album
 	{
 		this.unidadesCarrinho = unidadesCarrinho;
 	}
+	//Método para aceder às Unidades Disponíveis de cada Album
 	public int getUnidadesDisponiveis()
 	{
 		return unidadesDisponiveis;

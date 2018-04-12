@@ -137,10 +137,10 @@ public class Menu
 	//Menu do Administrador
 	public static void LogInAdministrador(Loja loja, Administrador admin)
 	{
+		System.out.println("Bem Vindo à Vinyl Records Lda. Administrador! \n\n");
+
 		int opcao = 0;
 		Scanner input = new Scanner(System.in);
-
-		System.out.println("Bem Vindo à Vinyl Records Lda. Administrador! \n\n");
 
 		while (opcao != 6)
 		{
@@ -149,9 +149,21 @@ public class Menu
 			System.out.printf("[2] -> Remover um Album \n");
 			System.out.printf("[3] -> Ver a lista de Albuns \n");
 			System.out.printf("[4] -> Mudar o preço de um Album \n");
-			System.out.printf("[5] -> Visiualizar estatísticas \n");
+			System.out.printf("[5] -> Visualizar estatísticas \n");
 			System.out.printf("[6] -> Terminar sessão \n");
-
+			
+			while(!input.hasNextInt())
+			{
+				System.out.println("Input Inválido. \n");
+				input.next();
+				System.out.printf("Escolha uma das seguintes opções: \n\n");
+				System.out.printf("[1] -> Adicionar um Album \n");
+				System.out.printf("[2] -> Remover um Album \n");
+				System.out.printf("[3] -> Ver a lista de Albuns \n");
+				System.out.printf("[4] -> Mudar o preço de um Album \n");
+				System.out.printf("[5] -> Visualizar estatísticas \n");
+				System.out.printf("[6] -> Terminar sessão \n");
+			}
 			opcao = input.nextInt();
 			input.nextLine();
 			
@@ -217,10 +229,11 @@ public class Menu
 			if (opcao == 5)
 			{
 				System.out.println("=================\\Estatísticas//================= \n");
-				System.out.println("Total de dinheiro gasto na loja: " + loja.dinheiroGastoTotal() + " €.");
+				System.out.println("Total de dinheiro gasto na loja: " + loja.dinheiroGastoTotal() + "€.");
+				System.out.println(loja.dinheiroGastoGenero());
 				System.out.println("Número total de discos em stock: " + loja.albunsStock() + ".");
 				System.out.println(loja.albunsStockGenero());
-				System.out.println(loja.dinheiroGastoGenero());
+
 			}
 			//Terminar Sessão
 			if (opcao == 6)
@@ -250,8 +263,23 @@ public class Menu
 			System.out.printf("[7] -> Finalizar compra \n");
 			System.out.printf("[8] -> Terminar sessão \n");
 
+			while(!input.hasNextInt())
+			{
+				System.out.println("Input Inválido. \n");
+				input.next();
+				System.out.printf("Escolha uma das seguintes opções: \n\n");
+				System.out.printf("[1] -> Ver Lista de Albums \n");
+				System.out.printf("[2] -> Procurar Album por nome \n");
+				System.out.printf("[3] -> Procurar Album por género \n");
+				System.out.printf("[4] -> Procurar Album por grupo \n");
+				System.out.printf("[5] -> Procurar Album por música \n");
+				System.out.printf("[6] -> Ver dados da conta \n");
+				System.out.printf("[7] -> Finalizar compra \n");
+				System.out.printf("[8] -> Terminar sessão \n");
+			}
 			opcao = input.nextInt();
 			input.nextLine();
+
 			
 			//Ver a Lista de Albuns
 			if (opcao == 1)
